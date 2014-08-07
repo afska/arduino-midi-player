@@ -7,6 +7,11 @@ module.exports = #---
 #A piezo that can play sounds by
 #clicking at the right frequency.
 class Buzzer extends DigitalDevice
+	constructor: (pin) ->
+		super pin
+		@notes = new NoteDictionary().notes
+		
+
 	#play a tone creating a wave with *high* ns
 	#of high time, with *duration* ms long.
 	playTone: (high, duration) =>

@@ -9,6 +9,7 @@ class NoteDictionary
 			@noteNames().map (note) =>
 				note: note
 				frequency: @frequencyOf note
+				timeHigh: @timeHighOf note
 
 	#all available note names.
 	noteNames: =>
@@ -23,6 +24,7 @@ class NoteDictionary
 			.flatten()
 
 	#frequency of a *note*.
+	# 440 * (2^(1/12))^semitonesFromA4
 	frequencyOf: (note) =>
 		twelthRootOf2 = Math.pow 2, 1/12
 		a4 = 440
@@ -30,3 +32,9 @@ class NoteDictionary
 		positionOf = (note) => @noteNames().indexOf note
 		distanceToA4 = positionOf(note) - positionOf("a4")
 		a4 * Math.pow twelthRootOf2, distanceToA4
+
+	#time high of a wave in a *note*.
+	# ((1 / (2 * frequency))
+	# * 1000000 [s -> ns]
+	timeHighOf: (note) =>
+		1000000 / (2 * @frequencyOf note)
