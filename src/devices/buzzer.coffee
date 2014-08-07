@@ -4,27 +4,31 @@ module.exports = #---
 
 class Buzzer
 	constructor: (@pin) ->
-		@value = LOW
+		@isOn = false
 		board.setPinAsOutput @pin
 
-		@play 1136, 1000
+		@play 1136, 3000
 
-	play: (timeHigh, duration) =>
-		new Timer()
+	#plays a tone creating a wave with *high* ns
+	#of high time, with *duration* ms long.
+	play: (high, duration) =>
+		timer = new Timer()
+		nsToMs = (ns) -> ns / 1000000
 
+		makeWave = =>
+			@toggle()
 
-		timer.setInterval ->
+			if nsToMs(timer.difTime) > duration
+				@off()
+				timer.clearInterval()
 
-	on: => @_update HIGH
+		timer.setInterval makeWave, null, "#{high}u"
 
-	off: => @_update LOW
+	on: => @_update true
 
-	toggle: =>
-		@value = if @value then LOW else HIGH
-		@_update @value
+	off: => @_update false
 
-	blink: (interval) =>
-		setInterval @toggle, interval
+	toggle: => @_update !@isOn
 
-	_update: (newValue) =>
-		board.digitalWrite @pin, @value = newValue
+	_update: (isOn) =>
+		board.digitalWrite @pin, @isOn = isOn

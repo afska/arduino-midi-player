@@ -1,7 +1,7 @@
 require "./utils/include"
 
 Led = include "devices/led"
-#Buzzer = include "devices/buzzer"
+Buzzer = include "devices/buzzer"
 board = include "board"
 module.exports = #---
 
@@ -10,4 +10,4 @@ board.on "ready", ->
 
 	new Led(13).blink 200
 
-	#new Buzzer 12
+	new Buzzer(12)
