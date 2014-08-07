@@ -13,6 +13,7 @@ class Buzzer extends DigitalDevice
 
 	#play a note (e.g. a#4) for *duration* ns.
 	playNote: (note, duration) =>
+		console.log "estoy tocando un #{note} por #{duration} ms"
 		high = @notes
 			.find((noteInfo) => noteInfo.note == note)
 			.timeHigh
