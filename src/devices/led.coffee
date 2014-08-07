@@ -1,19 +1,15 @@
+DigitalDevice = include "devices/digitalDevice"
 board = include "board"
 module.exports = #---
 
-class Led
-	constructor: (@pin) ->
-		@isOn = false
-		board.setPinAsOutput @pin
-
-	on: => @_update true
-
-	off: => @_update false
-
-	toggle: => @_update !@isOn
-
+#a simple led.
+class Led extends DigitalDevice
+	#make the led to blink every *interval* ms.
 	blink: (interval) =>
-		setInterval @toggle, interval
+		@blinking = setInterval @toggle, interval
 
-	_update: (isOn) =>
-		board.digitalWrite @pin, @isOn = isOn
+	#stop blinking the led.
+	stopBlink: =>
+		if @blinking?
+			clearInterval @blinking
+			delete @blinking

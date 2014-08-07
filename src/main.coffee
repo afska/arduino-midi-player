@@ -10,4 +10,4 @@ board.on "ready", ->
 
 	new Led(13).blink 200
 
-	new Buzzer(12)
+	new Buzzer(12).playTone 1136, 3000
