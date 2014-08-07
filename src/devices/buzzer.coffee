@@ -1,4 +1,5 @@
 DigitalDevice = include "devices/digitalDevice"
+NotesDictionary = include "devices/buzzer/noteDictionary"
 Timer = require "nanotimer"
 board = include "board"
 module.exports = #---
