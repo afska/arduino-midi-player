@@ -3,19 +3,17 @@ module.exports = #---
 
 class Led
 	constructor: (@pin) ->
-		@value = LOW
+		@isOn = false
 		board.setPinAsOutput @pin
 
-	on: => @_update HIGH
+	on: => @_update true
 
-	off: => @_update LOW
+	off: => @_update false
 
-	toggle: =>
-		@value = if @value then LOW else HIGH
-		@_update @value
+	toggle: => @_update !@isOn
 
 	blink: (interval) =>
 		setInterval @toggle, interval
 
 	_update: (newValue) =>
-		board.digitalWrite @pin, @value = newValue
+		board.digitalWrite @pin, @isOn = +newValue

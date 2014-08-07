@@ -1,26 +1,30 @@
-five = require "johnny-five"
+Timer = require "nanotimer"
 board = include "board"
 module.exports = #---
 
 class Buzzer
 	constructor: (@pin) ->
-		@buzzer = new five.Piezo @pin
-		board.repl.inject piezo: @buzzer
+		@value = LOW
+		board.setPinAsOutput @pin
 
-		@playA()
+		#@play 1136, 1000
 
-	playA: =>
-		@buzzer.play
-			song: [
-				["C4", 1/8]
-				[null, 1/16]
-				["C4", 1/8]
-				["D4", 1/4]
-				["C4", 1/4]
-				["F4", 1/4]
-				["E4", 1/4]
-				[null, 1/4]
-				[null, 1]
-			]
-			tempo: 40
-		@buzzer.off()
+	play: (timeHigh, duration) =>
+		new Timer()
+
+
+		timer.setInterval ->
+
+	on: => @_update HIGH
+
+	off: => @_update LOW
+
+	toggle: =>
+		@value = if @value then LOW else HIGH
+		@_update @value
+
+	blink: (interval) =>
+		setInterval @toggle, interval
+
+	_update: (newValue) =>
+		board.digitalWrite @pin, @value = newValue

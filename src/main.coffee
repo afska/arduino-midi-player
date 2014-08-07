@@ -1,21 +1,13 @@
 require "./utils/include"
 
-now = -> (require("performance-now"))() * 1000
-usleep = (microseconds) ->
-	start = now()
-
-	while true
-		if now() - start > microseconds
-			break
-
 Led = include "devices/led"
-Buzzer = include "devices/buzzer"
+#Buzzer = include "devices/buzzer"
 board = include "board"
 module.exports = #---
 
 board.on "ready", ->
 	console.log "Hello f*ckin' world :D"
 
-	new Led(12).blink 200
+	new Led(13).blink 200
 
-	new Buzzer 12
+	#new Buzzer 12
