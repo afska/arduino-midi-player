@@ -11,5 +11,6 @@ class Led extends DigitalDevice
 	#stop blinking the led.
 	stopBlink: =>
 		if @blinking?
+			@off()
 			clearInterval @blinking
 			delete @blinking

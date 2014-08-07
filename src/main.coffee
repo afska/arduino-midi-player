@@ -9,8 +9,11 @@ module.exports = #---
 board.on "ready", ->
 	console.log "Hello f*ckin' world :D"
 
-	new Led(13).blink 200
+	led = new Led(13)
+	led.blink 200
 
 	buzz = new Buzzer(12)
 
 	new Melody().playWith buzz
+
+	setTimeout (() -> led.stopBlink()), 1000
