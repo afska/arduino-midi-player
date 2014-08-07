@@ -1,9 +1,9 @@
 include "utils/arrayUtils"
 module.exports = #---
 
-#A monotrack 4/4 song that
+#A monotrack 4/4 melody that
 #can be played in a buzzer.
-class Song
+class Melody
 	constructor: ->
 		@notes = [
 			{ note: "c4", duration: 1/8 }
@@ -25,11 +25,10 @@ class Song
 		]
 
 		@beat = 1/4
-		@tempo = 120
+		@tempo = 120 #bpm
 
-		@blackDuration = #s -> ms
+		@beatDuration = #s -> ms
 			(60 / @tempo) * 1000
-		console.log "una negra dura #{@blackDuration}"
 
 	#play the song with a *player*.
 	#a player is an object that understands
@@ -38,12 +37,9 @@ class Song
 		timeElapsed = 0
 
 		@notes.forEach (noteInfo) =>
-			# 1/4 ------------------- @blackDuration
-			# noteInfo.duration ----- x
-
-			duration = noteInfo.duration * @blackDuration / (1/4)
-			playNote = => player.playNote noteInfo.note, duration
-			if !noteInfo.note? then playNote = =>
+			duration = (noteInfo.duration / @beat) * @beatDuration
+			playNote = => if noteInfo.note?
+				player.playNote noteInfo.note, duration
 
 			setTimeout playNote, timeElapsed
 			timeElapsed += duration
