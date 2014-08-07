@@ -7,7 +7,7 @@ class Buzzer
 		@value = LOW
 		board.setPinAsOutput @pin
 
-		#@play 1136, 1000
+		@play 1136, 1000
 
 	play: (timeHigh, duration) =>
 		new Timer()

@@ -4,9 +4,9 @@ module.exports = #---
 board = new five.Board()
 
 board.setPinAsInput = (pin) ->
-	board.pinMode pin, LOW
+	board.pinMode pin, false
 
 board.setPinAsOutput = (pin) ->
-	board.pinMode pin, HIGH
+	board.pinMode pin, true
 
 board

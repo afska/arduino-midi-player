@@ -15,5 +15,5 @@ class Led
 	blink: (interval) =>
 		setInterval @toggle, interval
 
-	_update: (newValue) =>
-		board.digitalWrite @pin, @isOn = +newValue
+	_update: (isOn) =>
+		board.digitalWrite @pin, @isOn = isOn
