@@ -23,7 +23,7 @@ class Buzzer extends DigitalDevice
 	#of time high, with *duration* ms long.
 	_playTone: (high, duration) =>
 		timer = new Timer()
-		timer.elapsedTime = -> #ns -> ms
+		timer.elapsedTime = => #ns -> ms
 			timer.difTime / 1000000
 
 		makeWave = =>
@@ -33,4 +33,4 @@ class Buzzer extends DigitalDevice
 				@off()
 				timer.clearInterval()
 
-		timer.setInterval makeWave, null, "#{high}u", ->
+		timer.setInterval makeWave, null, "#{high}u", =>

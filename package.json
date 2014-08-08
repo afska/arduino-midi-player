@@ -15,6 +15,7 @@
 
 		"johnny-five": "*",
 		"nanotimer": "*",
-		"lodash": "*"
+		"lodash": "*",
+		"midifile": "*"
 	}
 }
