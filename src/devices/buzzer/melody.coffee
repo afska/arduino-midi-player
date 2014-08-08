@@ -3,6 +3,11 @@ module.exports = #---
 
 #A monotrack 4/4 melody that
 #can be played in a buzzer.
+#*notes* is, for example: [
+#    { note: "c#5", duration: 1/4 }
+#    { note: null, duration: 1/8 }
+#]
+#*tempo* is in bpm
 class Melody
 	constructor: ->
 		@notes = [
@@ -30,9 +35,9 @@ class Melody
 		@beatDuration = #s -> ms
 			(60 / @tempo) * 1000
 
-	#play the song with a *player*.
-	#a player is an object that understands
-	# playNote(note, duration).
+	#play the melody with a *player*.
+	#a player is an object that understands:
+	# playNote(note, duration)
 	playWith: (player) =>
 		timeElapsed = 0
 
