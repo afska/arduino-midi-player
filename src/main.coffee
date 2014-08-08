@@ -8,14 +8,31 @@ MIDIFile = require "midifile"
 board = include "board"
 module.exports = #---
 
-board.on "ready", ->
-	console.log "Hello f*ckin' world :D"
+blinkTheLed = -> new Led(13).blink 200
 
-	new Led(13).blink 200
+playHappyBirthday = ->
+	buzz = new Buzzer 12
+	happyBirthday = new Melody [
+		{ note: "c4", duration: 1/8 }
+		{ note: null, duration: 1/16 }
+		{ note: "c4", duration: 1/16 }
+		{ note: "d4", duration: 1/4 }
+		{ note: "c4", duration: 1/4 }
+		{ note: "f4", duration: 1/4 }
+		{ note: "e4", duration: 1/4 }
+		{ note: null, duration: 1/4 }
+		{ note: "c4", duration: 1/8 }
+		{ note: null, duration: 1/16 }
+		{ note: "c4", duration: 1/16 }
+		{ note: "d4", duration: 1/4 }
+		{ note: "c4", duration: 1/4 }
+		{ note: "g4", duration: 1/4 }
+		{ note: "f4", duration: 1/4 }
+		{ note: null, duration: 1/4 }
+	], 120
+	happyBirthday.playWith buzz
 
-	buzz = new Buzzer(12)
-	new Melody().playWith buzz
-
+openMidi = ->
 	buffer = fs.readFileSync "test.mid"
 
 	toArrayBuffer = (buffer) ->
@@ -30,7 +47,14 @@ board.on "ready", ->
 	midiFile = new MIDIFile toArrayBuffer(buffer)
 
 	#Headers
-	console.log "format: #{midiFile.header.getFormat()}"
-	console.log "tracks: #{midiFile.header.getTracksCount()}"
+	#console.log "format: #{midiFile.header.getFormat()}"
+	#console.log "tracks: #{midiFile.header.getTracksCount()}"
 
 	midiFile.getTrackEvents 0 #eventos del midi a reproducir
+
+board.on "ready", ->
+	console.log "Hello f*ckin' world :D"
+
+	blinkTheLed()
+	playHappyBirthday()
+	openMidi()

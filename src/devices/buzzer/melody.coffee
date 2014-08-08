@@ -9,29 +9,8 @@ module.exports = #---
 #]
 #*tempo* is in bpm
 class Melody
-	constructor: ->
-		@notes = [
-			{ note: "c4", duration: 1/8 }
-			{ note: null, duration: 1/16 }
-			{ note: "c4", duration: 1/16 }
-			{ note: "d4", duration: 1/4 }
-			{ note: "c4", duration: 1/4 }
-			{ note: "f4", duration: 1/4 }
-			{ note: "e4", duration: 1/4 }
-			{ note: null, duration: 1/4 }
-			{ note: "c4", duration: 1/8 }
-			{ note: null, duration: 1/16 }
-			{ note: "c4", duration: 1/16 }
-			{ note: "d4", duration: 1/4 }
-			{ note: "c4", duration: 1/4 }
-			{ note: "g4", duration: 1/4 }
-			{ note: "f4", duration: 1/4 }
-			{ note: null, duration: 1/4 }
-		]
-
+	constructor: (@notes, @tempo) ->
 		@beat = 1/4
-		@tempo = 120 #bpm
-
 		@beatDuration = #s -> ms
 			(60 / @tempo) * 1000
 
