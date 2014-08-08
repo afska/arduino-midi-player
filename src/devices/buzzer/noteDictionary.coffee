@@ -23,14 +23,18 @@ class NoteDictionary
 				].map (note) => "#{note}#{octave}"
 			.flatten()
 
+	#position of a *note* in the notes array.
+	# e.g. d#0 is 3
+	positionOf: (note) =>
+		@noteNames().indexOf note
+
 	#frequency of a *note*.
 	# 440 * (2^(1/12))^semitonesFromA4
 	frequencyOf: (note) =>
 		twelthRootOf2 = Math.pow 2, 1/12
 		a4 = 440
 
-		positionOf = (note) => @noteNames().indexOf note
-		distanceToA4 = positionOf(note) - positionOf("a4")
+		distanceToA4 = @positionOf(note) - @positionOf("a4")
 		a4 * Math.pow twelthRootOf2, distanceToA4
 
 	#time high of a wave in a *note*: one half
