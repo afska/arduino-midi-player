@@ -1,3 +1,4 @@
+EventEmitter = require("events").EventEmitter
 include "utils/arrayUtils"
 module.exports = #---
 
@@ -14,16 +15,24 @@ class Melody
 		@beatDuration = #s -> ms
 			(60 / @tempo) * 1000
 
+		@events = new EventEmitter()
+
 	#play the melody with a *player*.
 	#a player is an object that understands:
 	# playNote(note, duration)
 	playWith: (player) =>
-		timeElapsed = 0
+		@events.emit "start"
+		elapsedTime = 0
 
 		@notes.forEach (noteInfo) =>
 			duration = (noteInfo.duration / @beat) * @beatDuration
-			playNote = => if noteInfo.note?
-				player.playNote noteInfo.note, duration
+			playNote = =>
+				@events.emit "note", noteInfo
+				
+				if noteInfo.note?
+					player.playNote noteInfo.note, duration
 
-			setTimeout playNote, timeElapsed
-			timeElapsed += duration
+			setTimeout playNote, elapsedTime
+			elapsedTime += duration
+
+		setTimeout (() => @events.emit("end")), elapsedTime
