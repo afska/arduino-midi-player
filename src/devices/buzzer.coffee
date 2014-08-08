@@ -1,6 +1,7 @@
 DigitalDevice = include "devices/digitalDevice"
 NoteDictionary = include "devices/buzzer/noteDictionary"
 Timer = require "nanotimer"
+EventEmitter = require("events").EventEmitter
 board = include "board"
 module.exports = #---
 
@@ -11,8 +12,12 @@ class Buzzer extends DigitalDevice
 		super pin
 		@notes = new NoteDictionary().notes
 
-	#play a note (e.g. a#4) for *duration* ns.
+		@events = new EventEmitter() #EMITILOS GUACHIN
+
+	#play a *note* (e.g. "a#4") for *duration* ms.
 	playNote: (note, duration) =>
+		@events.emit "start"
+
 		high = @notes
 			.find((noteInfo) => noteInfo.note == note)
 			.timeHigh
@@ -20,7 +25,7 @@ class Buzzer extends DigitalDevice
 		@_playTone high, duration
 
 	#play a tone creating a wave with *high* ns
-	#of time high, with *duration* ms long.
+	#of high time, with *duration* ms long.
 	_playTone: (high, duration) =>
 		timer = new Timer()
 		timer.elapsedTime = => #ns -> ms
@@ -28,9 +33,9 @@ class Buzzer extends DigitalDevice
 
 		makeWave = =>
 			@toggle()
-
 			if timer.elapsedTime() >= duration
 				@off()
 				timer.clearInterval()
+				@events.emit "end"
 
 		timer.setInterval makeWave, null, "#{high}u", =>

@@ -14,29 +14,29 @@ playHappyBirthday = ->
 	buzz = new Buzzer 12
 
 	happyBirthday = new Melody [
-		{ note: "c4", duration: 1/8 }
-		{ note: null, duration: 1/16 }
-		{ note: "c4", duration: 1/16 }
-		{ note: "d4", duration: 1/4 }
-		{ note: "c4", duration: 1/4 }
-		{ note: "f4", duration: 1/4 }
-		{ note: "e4", duration: 1/4 }
-		{ note: null, duration: 1/4 }
-		{ note: "c4", duration: 1/8 }
-		{ note: null, duration: 1/16 }
-		{ note: "c4", duration: 1/16 }
-		{ note: "d4", duration: 1/4 }
-		{ note: "c4", duration: 1/4 }
-		{ note: "g4", duration: 1/4 }
-		{ note: "f4", duration: 1/4 }
-		{ note: null, duration: 1/4 }
+		{ note: "c4", length: 1/8 }
+		{ note: null, length: 1/16 }
+		{ note: "c4", length: 1/16 }
+		{ note: "d4", length: 1/4 }
+		{ note: "c4", length: 1/4 }
+		{ note: "f4", length: 1/4 }
+		{ note: "e4", length: 1/4 }
+		{ note: null, length: 1/4 }
+		{ note: "c4", length: 1/8 }
+		{ note: null, length: 1/16 }
+		{ note: "c4", length: 1/16 }
+		{ note: "d4", length: 1/4 }
+		{ note: "c4", length: 1/4 }
+		{ note: "g4", length: 1/4 }
+		{ note: "f4", length: 1/4 }
+		{ note: null, length: 1/4 }
 	], 120
 
 	happyBirthday.events
 		.on "start", -> console.log "start!"
 
-	happyBirthday.events.on "note", (info) ->
-		console.log "i'm playing a #{info.note} of #{info.duration}"
+	happyBirthday.events.on "note", (noteInfo) ->
+		console.log "i'm playing a #{noteInfo.note} of #{noteInfo.length}"
 
 	happyBirthday.events
 		.on "end", -> console.log "end!"

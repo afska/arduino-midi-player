@@ -8,5 +8,5 @@ class Song
 
 	#play the song with a *player*.
 	#a player is an object that understands:
-	# playNote(note, duration)
+	# playNote { note: "c#5", duration: 1/4 }
 	playWith: (player) =>

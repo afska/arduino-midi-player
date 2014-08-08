@@ -5,8 +5,8 @@ module.exports = #---
 #A monotrack 4/4 melody that
 #can be played in a buzzer.
 #*notes* is, for example: [
-#    { note: "c#5", duration: 1/4 }
-#    { note: null, duration: 1/8 }
+#    { note: "c#5", length: 1/4 }
+#    { note: null, length: 1/8 }
 #]
 #*tempo* is in bpm
 class Melody
@@ -28,7 +28,7 @@ class Melody
 		elapsedTime = 0
 
 		@notes.forEach (noteInfo) =>
-			duration = (noteInfo.duration / @beat) * @beatDuration
+			duration = (noteInfo.length / @beat) * @beatDuration
 			playNote = =>
 				@events.emit "note", noteInfo
 
@@ -40,10 +40,12 @@ class Melody
 
 		setTimeout @_end, elapsedTime
 
+	#emit the events for the start.
 	_start: =>
 		@playing = true
 		@events.emit "start"
 
+	#emit the events for the end.
 	_end: =>
 		@playing = false
 		@events.emit "end"
