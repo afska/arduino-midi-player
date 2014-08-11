@@ -3,8 +3,11 @@ require "./utils/include"
 Led = include "devices/led"
 Buzzer = include "devices/buzzer"
 Melody = include "devices/buzzer/melody"
+
 fs = require "fs"
 MIDIFile = require "midifile"
+NoteDictionary = include "devices/buzzer/noteDictionary"
+
 board = include "board"
 module.exports = #---
 
@@ -57,6 +60,23 @@ openMidi = ->
 
 	midiFile = new MIDIFile toArrayBuffer(buffer)
 
+	notes = midiFile.getTrackEvents(0)
+		.filter((event) -> event.type is 8 and event.subtype is 9)
+		.map (event) -> { note: new NoteDictionary().noteNames()[event.param1], length: 1/4 }
+
+	buzz = new Buzzer 12
+	midiMelody = new Melody notes, 120
+	midiMelody.playWith buzz
+
+	midiMelody.events
+		.on "start", -> console.log "start!"
+
+	midiMelody.events.on "note", (noteInfo) ->
+		console.log "i'm playing a #{noteInfo.note} of #{noteInfo.length}"
+
+	midiMelody.events
+		.on "end", -> console.log "end!"
+
 	#Headers
 	#console.log "format: #{midiFile.header.getFormat()}"
 	#console.log "tracks: #{midiFile.header.getTracksCount()}"
@@ -67,5 +87,5 @@ board.on "ready", ->
 	console.log "Hello f*ckin' world :D"; debugger
 
 	blinkTheLed()
-	playHappyBirthday()
+	#playHappyBirthday()
 	openMidi()
