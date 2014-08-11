@@ -19,6 +19,8 @@ module.exports = (grunt) ->
 		execute:
 			run:
 				src: [".js/main.js"]
+			exit:
+				src: ["exit.js"]
 
 		watch:
 			coffee:
@@ -27,3 +29,11 @@ module.exports = (grunt) ->
 				options:
 					atBegin: true
 					interrupt: true
+
+	closing = false
+	process.on "SIGINT", ->
+		if !closing
+			closing = true
+			grunt.task.run "execute:exit"
+		else
+			process.kill()
