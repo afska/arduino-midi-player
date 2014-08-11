@@ -4,6 +4,7 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks "grunt-execute"
 	grunt.loadNpmTasks "grunt-contrib-watch"
 
+	grunt.registerTask "compile", ["clean", "coffee"]
 	grunt.registerTask "default", ["watch"]
 	grunt.initConfig
 		clean: [".js"]
@@ -25,7 +26,7 @@ module.exports = (grunt) ->
 		watch:
 			coffee:
 				files: "src/**/*.coffee"
-				tasks: ["clean", "coffee:compile", "execute:run"]
+				tasks: ["compile", "execute:run"]
 				options:
 					atBegin: true
 					interrupt: true

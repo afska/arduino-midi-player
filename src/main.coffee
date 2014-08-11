@@ -64,7 +64,7 @@ openMidi = ->
 	midiFile.getTrackEvents 0 #eventos del midi a reproducir
 
 board.on "ready", ->
-	console.log "Hello f*ckin' world :D"
+	console.log "Hello f*ckin' world :D"; debugger
 
 	blinkTheLed()
 	playHappyBirthday()
