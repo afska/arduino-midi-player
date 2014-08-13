@@ -9,7 +9,7 @@ class NoteDictionary
 			@noteNames().map (note) =>
 				note: note
 				frequency: @frequencyOf note
-				timeHigh: @timeHighOf note
+				highTime: @highTimeOf note
 
 	#all available note names.
 	noteNames: =>
@@ -37,9 +37,9 @@ class NoteDictionary
 		distanceToA4 = @positionOf(note) - @positionOf("a4")
 		a4 * Math.pow twelthRootOf2, distanceToA4
 
-	#time high of a wave in a *note*: one half
+	#high time of a wave in a *note*: one half
 	#of the period is HIGH, the other one is LOW.
 	# (period / 2) * 1000000 [s -> ns]
-	timeHighOf: (note) =>
+	highTimeOf: (note) =>
 		period = 1 / @frequencyOf note
 		(period / 2) * 1000000

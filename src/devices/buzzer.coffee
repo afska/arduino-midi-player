@@ -12,7 +12,7 @@ class Buzzer extends DigitalDevice
 		super pin
 		@notes = new NoteDictionary().notes
 
-		@events = new EventEmitter() #EMITILOS GUACHIN
+		@events = new EventEmitter()
 
 	#play a *note* (e.g. "a#4") for *duration* ms.
 	playNote: (note, duration) =>
@@ -20,7 +20,7 @@ class Buzzer extends DigitalDevice
 
 		high = @notes
 			.find((noteInfo) => noteInfo.note == note)
-			.timeHigh
+			.highTime
 
 		@_playTone high, duration
 
@@ -28,6 +28,7 @@ class Buzzer extends DigitalDevice
 	#of high time, with *duration* ms long.
 	_playTone: (high, duration) =>
 		timer = new Timer()
+
 		timer.elapsedTime = => #ns -> ms
 			timer.difTime / 1000000
 
