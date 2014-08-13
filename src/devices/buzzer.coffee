@@ -15,6 +15,8 @@ class Buzzer extends DigitalDevice
 		@events = new EventEmitter()
 
 	#play a *note* (e.g. "a#4") for *duration* ms.
+	#the octaves [6 .. 10] can't be played with
+	#Firmata due to a microseconds delay problem...
 	playNote: (note, duration) =>
 		@events.emit "start"
 
@@ -23,6 +25,7 @@ class Buzzer extends DigitalDevice
 			.highTime
 
 		@_playTone high, duration
+		@events
 
 	#play a tone creating a wave with *high* ns
 	#of high time, with *duration* ms long.

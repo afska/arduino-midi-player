@@ -39,6 +39,7 @@ class Melody
 			elapsedTime += duration
 
 		setTimeout @_end, elapsedTime
+		@events
 
 	#emit the events for the start.
 	_start: =>

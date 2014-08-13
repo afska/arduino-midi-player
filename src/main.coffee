@@ -7,6 +7,7 @@ Melody = include "devices/buzzer/melody"
 fs = require "fs"
 MIDIFile = require "midifile"
 NoteDictionary = include "devices/buzzer/noteDictionary"
+Timer = require "nanotimer"
 
 board = include "board"
 module.exports = #---
@@ -17,21 +18,21 @@ playHappyBirthday = ->
 	buzz = new Buzzer 12
 
 	happyBirthday = new Melody [
-		{ note: "c6", length: 1/8 }
+		{ note: "c4", length: 1/8 }
 		{ note: null, length: 1/16 }
-		{ note: "c6", length: 1/16 }
-		{ note: "d6", length: 1/4 }
-		{ note: "c6", length: 1/4 }
-		{ note: "f6", length: 1/4 }
-		{ note: "e6", length: 1/4 }
+		{ note: "c4", length: 1/16 }
+		{ note: "d4", length: 1/4 }
+		{ note: "c4", length: 1/4 }
+		{ note: "f4", length: 1/4 }
+		{ note: "e4", length: 1/4 }
 		{ note: null, length: 1/4 }
-		{ note: "c6", length: 1/8 }
+		{ note: "c4", length: 1/8 }
 		{ note: null, length: 1/16 }
-		{ note: "c6", length: 1/16 }
-		{ note: "d6", length: 1/4 }
-		{ note: "c6", length: 1/4 }
-		{ note: "g6", length: 1/4 }
-		{ note: "f6", length: 1/4 }
+		{ note: "c4", length: 1/16 }
+		{ note: "d4", length: 1/4 }
+		{ note: "c4", length: 1/4 }
+		{ note: "g4", length: 1/4 }
+		{ note: "f4", length: 1/4 }
 		{ note: null, length: 1/4 }
 	], 120
 
