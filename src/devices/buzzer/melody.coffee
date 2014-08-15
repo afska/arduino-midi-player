@@ -1,4 +1,5 @@
 EventEmitter = require("events").EventEmitter
+Q = require "q"
 include "utils/arrayUtils"
 module.exports = #---
 
@@ -23,23 +24,23 @@ class Melody
 	# playNote(note, duration)
 	playWith: (player) =>
 		if @playing then return
-
 		@_start()
-		elapsedTime = 0
 
-		@notes.forEach (noteInfo) =>
-			duration = (noteInfo.length / @beat) * @beatDuration
-			playNote = =>
+		playAllNotes = (previousPromise, noteInfo) =>
+			previousPromise.then =>
 				@events.emit "note", noteInfo
+				player.playNote noteInfo.note, @_durationOf(noteInfo)
 
-				if noteInfo.note?
-					player.playNote noteInfo.note, duration
+		seed = Q.defer() ; seed.resolve()
+		@notes
+			.reduce(playAllNotes, seed.promise)
+			.then @_end
 
-			setTimeout playNote, elapsedTime
-			elapsedTime += duration
-
-		setTimeout @_end, elapsedTime
 		@events
+
+	#duration of a note in ms.
+	_durationOf: (noteInfo) =>
+		(noteInfo.length / @beat) * @beatDuration
 
 	#emit the events for the start.
 	_start: =>

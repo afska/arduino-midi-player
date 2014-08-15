@@ -1,7 +1,6 @@
 DigitalDevice = include "devices/digitalDevice"
 NoteDictionary = include "devices/buzzer/noteDictionary"
-Timer = require "nanotimer"
-EventEmitter = require("events").EventEmitter
+Q = require "q"
 board = include "board"
 module.exports = #---
 
@@ -12,34 +11,35 @@ class Buzzer extends DigitalDevice
 		super pin
 		@notes = new NoteDictionary().notes
 
-		@events = new EventEmitter()
-
 	#play a *note* (e.g. "a#4") for *duration* ms.
-	#the octaves [6 .. 10] can't be played with
-	#Firmata due to a microseconds delay problem...
+	# (a null is a rest)
 	playNote: (note, duration) =>
-		@events.emit "start"
+		if !note?
+			return @_playRest duration
 
 		high = @notes
 			.find((noteInfo) => noteInfo.note == note)
 			.highTime
 
 		@_playTone high, duration
-		@events
 
 	#play a tone creating a wave with *high* ns
 	#of high time, with *duration* ms long.
 	_playTone: (high, duration) =>
-		timer = new Timer()
+		board.analogWrite @pin, 3 #Invertir, está mal
+		board.analogWrite @pin, high
 
-		timer.elapsedTime = => #ns -> ms
-			timer.difTime / 1000000
+		deferred = Q.defer()
+		stop = =>
+			board.analogWrite @pin, 3
+			board.analogWrite @pin, 0
+			deferred.resolve()
 
-		makeWave = =>
-			@toggle()
-			if timer.elapsedTime() >= duration
-				@off()
-				timer.clearInterval()
-				@events.emit "end"
+		setTimeout stop, duration
+		deferred.promise
 
-		timer.setInterval makeWave, null, "#{high}u", =>
+	#play a rest of *duration* ms long.
+	_playRest: (duration) =>
+		deferred = Q.defer()
+		setTimeout deferred.resolve, duration
+		deferred.promise

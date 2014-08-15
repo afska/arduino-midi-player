@@ -14,7 +14,7 @@
 		"grunt-contrib-watch": "*",
 
 		"johnny-five": "*",
-		"nanotimer": "*",
+		"q": "*",
 		"lodash": "*",
 		"midifile": "*"
 	}
