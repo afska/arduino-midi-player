@@ -1,4 +1,4 @@
-DigitalDevice = include "devices/digitalDevice"
+DigitalDevice = include "devices/core/digitalDevice"
 board = include "board"
 module.exports = #---
 
