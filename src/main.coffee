@@ -48,7 +48,7 @@ playHappyBirthday = ->
 	happyBirthday.playWith buzz
 
 openMidi = ->
-	buffer = fs.readFileSync "test.mid"
+	buffer = fs.readFileSync "/home/rodri/Desktop/asa.mid"
 
 	toArrayBuffer = (buffer) ->
 		ab = new ArrayBuffer buffer.length
@@ -61,12 +61,33 @@ openMidi = ->
 
 	midiFile = new MIDIFile toArrayBuffer(buffer)
 
-	notes = midiFile.getTrackEvents(0)
-		.filter((event) -> event.type is 8 and event.subtype is 9)
-		.map (event) -> { note: new NoteDictionary().noteNames()[event.param1], length: 1/4 }
+	#tempo = midiFile.getEvents()
+	#	.find (event) -> event.channel is 0 and event.tempoBPM?
+	tempo = 130
+	#60s----------160
+	#0.001 -------- x
+
+	notes = midiFile.getEvents()
+		.filter((event) -> event.channel is 0)
+		.filter((event) -> event.type is 8 and event.subtype is 9);
+
+	beatDuration = #s -> ms
+		(60 / tempo) * 1000
+
+	dict = new NoteDictionary()
+	notes = notes
+		.map (event, i) ->
+			duration =
+				if notes[i+1]?
+					(notes[i+1].playTime - event.playTime) / (beatDuration * 4)
+				else
+					event.playTime / beatDuration
+
+			#ja, horrible
+			{ note: dict.noteNames()[event.param1], length: duration }
 
 	buzz = new Buzzer 3
-	midiMelody = new Melody notes, 120
+	midiMelody = new Melody notes, tempo
 
 	midiMelody.events
 		.on "start", -> console.log "start!"
@@ -78,7 +99,7 @@ openMidi = ->
 		.on "end", -> console.log "end!"
 
 	midiMelody.playWith buzz
-	
+
 	#Headers
 	#console.log "format: #{midiFile.header.getFormat()}"
 	#console.log "tracks: #{midiFile.header.getTracksCount()}"
@@ -89,6 +110,6 @@ board.on "ready", ->
 	console.log "Hello f*ckin' world :D"; debugger
 
 	#blinkTheLed()
-	#playHappyBirthday()
-	openMidi()
+	playHappyBirthday()
+	#openMidi()
 #------------------------------------------------------------------------------------------
