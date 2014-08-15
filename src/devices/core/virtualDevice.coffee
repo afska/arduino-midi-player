@@ -1,8 +1,8 @@
 board = include "board"
-module.exports = #---
+module.exports =
 
-#a device that can receive
-#as output a 16 bits value.
+#------------------------------------------------------------------------------------------
+#a device that can receive as output a 16 bits value.
 class VirtualDevice
 	constructor: (@logicPort) ->
 		board.setPinAsOutput @logicPort
@@ -11,3 +11,4 @@ class VirtualDevice
 	send: (values) =>
 		values.forEach (value) =>
 			board.analogWrite @logicPort, value
+#------------------------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 five = require "johnny-five"
-module.exports = #---
+module.exports =
 
+#------------------------------------------------------------------------------------------
 board = new five.Board()
 
 board.setPinAsInput = (pin) ->
@@ -10,3 +11,4 @@ board.setPinAsOutput = (pin) ->
 	board.pinMode pin, true
 
 board
+#------------------------------------------------------------------------------------------

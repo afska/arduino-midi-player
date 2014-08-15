@@ -2,10 +2,10 @@ VirtualDevice = include "devices/core/virtualDevice"
 NoteDictionary = include "devices/buzzer/noteDictionary"
 Q = require "q"
 board = include "board"
-module.exports = #---
+module.exports =
 
-#A piezo that can play sounds by
-#clicking at the right frequency.
+#------------------------------------------------------------------------------------------
+#A piezo that can play sounds by clicking at the right frequency.
 class Buzzer extends VirtualDevice
 	@LogicPort: 3 #pin for sending notes
 
@@ -42,3 +42,4 @@ class Buzzer extends VirtualDevice
 		deferred = Q.defer()
 		setTimeout deferred.resolve, duration
 		deferred.promise
+#------------------------------------------------------------------------------------------

@@ -1,10 +1,10 @@
 EventEmitter = require("events").EventEmitter
 Q = require "q"
 include "utils/arrayUtils"
-module.exports = #---
+module.exports =
 
-#A monotrack 4/4 melody that
-#can be played in a buzzer.
+#------------------------------------------------------------------------------------------
+#A monotrack 4/4 melody that can be played in a buzzer.
 #*notes* is, for example: [
 #    { note: "c#5", length: 1/4 }
 #    { note: null, length: 1/8 }
@@ -51,3 +51,4 @@ class Melody
 	_end: =>
 		@playing = false
 		@events.emit "end"
+#------------------------------------------------------------------------------------------

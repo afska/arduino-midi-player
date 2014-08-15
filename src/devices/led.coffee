@@ -2,6 +2,7 @@ DigitalDevice = include "devices/core/digitalDevice"
 board = include "board"
 module.exports = #---
 
+#------------------------------------------------------------------------------------------
 #a simple led.
 class Led extends DigitalDevice
 	#make the led to blink every *interval* ms.
@@ -14,3 +15,4 @@ class Led extends DigitalDevice
 			@off()
 			clearInterval @blinking
 			delete @blinking
+#------------------------------------------------------------------------------------------

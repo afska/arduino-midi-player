@@ -1,8 +1,8 @@
 include "utils/arrayUtils"
-module.exports = #---
+module.exports =
 
-#A dictionary for finding all the
-#playable notes with each frequency. 
+#------------------------------------------------------------------------------------------
+#A dictionary for finding all the playable notes with each frequency. 
 class NoteDictionary
 	constructor: ->
 		@notes = 
@@ -43,3 +43,4 @@ class NoteDictionary
 	highTimeOf: (note) =>
 		period = 1 / @frequencyOf note
 		(period / 2) * 1000000
+#------------------------------------------------------------------------------------------

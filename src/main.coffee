@@ -9,8 +9,9 @@ MIDIFile = require "midifile"
 NoteDictionary = include "devices/buzzer/noteDictionary"
 
 board = include "board"
-module.exports = #---
+module.exports =
 
+#------------------------------------------------------------------------------------------
 blinkTheLed = -> new Led(13).blink 200
 
 playHappyBirthday = ->
@@ -64,9 +65,8 @@ openMidi = ->
 		.filter((event) -> event.type is 8 and event.subtype is 9)
 		.map (event) -> { note: new NoteDictionary().noteNames()[event.param1], length: 1/4 }
 
-	buzz = new Buzzer 12
+	buzz = new Buzzer 3
 	midiMelody = new Melody notes, 120
-	midiMelody.playWith buzz
 
 	midiMelody.events
 		.on "start", -> console.log "start!"
@@ -77,6 +77,8 @@ openMidi = ->
 	midiMelody.events
 		.on "end", -> console.log "end!"
 
+	midiMelody.playWith buzz
+	
 	#Headers
 	#console.log "format: #{midiFile.header.getFormat()}"
 	#console.log "tracks: #{midiFile.header.getTracksCount()}"
@@ -87,5 +89,6 @@ board.on "ready", ->
 	console.log "Hello f*ckin' world :D"; debugger
 
 	#blinkTheLed()
-	playHappyBirthday()
-	#openMidi()
+	#playHappyBirthday()
+	openMidi()
+#------------------------------------------------------------------------------------------

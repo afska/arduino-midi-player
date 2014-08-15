@@ -1,8 +1,8 @@
 board = include "board"
-module.exports = #---
+module.exports =
 
-#a device that can be pulsed
-#with current (on) or not (off).
+#------------------------------------------------------------------------------------------
+#a device that can be pulsed with current (on) or not (off).
 class DigitalDevice
 	constructor: (@pin) ->
 		@isOn = false
@@ -20,3 +20,4 @@ class DigitalDevice
 	#turn the device to *isOn*.
 	_update: (isOn) =>
 		board.digitalWrite @pin, @isOn = isOn
+#------------------------------------------------------------------------------------------
