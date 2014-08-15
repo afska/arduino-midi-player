@@ -30,11 +30,3 @@ module.exports = (grunt) ->
 				options:
 					atBegin: true
 					interrupt: true
-
-	closing = false
-	process.on "SIGINT", ->
-		if !closing
-			closing = true
-			grunt.task.run "execute:exit"
-		else
-			process.kill()
