@@ -39,7 +39,7 @@ class NoteDictionary
 
 	#high time of a wave in a *note*: one half
 	#of the period is HIGH, the other one is LOW.
-	# (period / 2) * 1000000 [s -> ns]
+	# (period / 2) * 1000000 [s -> us]
 	highTimeOf: (note) =>
 		period = 1 / @frequencyOf note
 		(period / 2) * 1000000

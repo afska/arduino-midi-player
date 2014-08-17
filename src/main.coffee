@@ -18,21 +18,21 @@ playHappyBirthday = ->
 	buzz = new Buzzer 3
 
 	happyBirthday = new Melody [
-		{ note: "c6", length: 1/8 }
+		{ note: "c5", length: 1/8 }
 		{ note: null, length: 1/16 }
-		{ note: "c6", length: 1/16 }
-		{ note: "d6", length: 1/4 }
-		{ note: "c6", length: 1/4 }
-		{ note: "f6", length: 1/4 }
-		{ note: "e6", length: 1/4 }
+		{ note: "c5", length: 1/16 }
+		{ note: "d5", length: 1/4 }
+		{ note: "c5", length: 1/4 }
+		{ note: "f5", length: 1/4 }
+		{ note: "e5", length: 1/4 }
 		{ note: null, length: 1/4 }
-		{ note: "c6", length: 1/8 }
+		{ note: "c5", length: 1/8 }
 		{ note: null, length: 1/16 }
-		{ note: "c6", length: 1/16 }
-		{ note: "d6", length: 1/4 }
-		{ note: "c6", length: 1/4 }
-		{ note: "g6", length: 1/4 }
-		{ note: "f6", length: 1/4 }
+		{ note: "c5", length: 1/16 }
+		{ note: "d5", length: 1/4 }
+		{ note: "c5", length: 1/4 }
+		{ note: "g5", length: 1/4 }
+		{ note: "f5", length: 1/4 }
 		{ note: null, length: 1/4 }
 	], 120
 
@@ -48,6 +48,8 @@ playHappyBirthday = ->
 	happyBirthday.playWith buzz
 
 openMidi = ->
+	#esto está recontra cabeza, pero son pruebas ^.^
+
 	buffer = fs.readFileSync "/home/rodri/Desktop/asa.mid"
 
 	toArrayBuffer = (buffer) ->
@@ -63,7 +65,7 @@ openMidi = ->
 
 	#tempo = midiFile.getEvents()
 	#	.find (event) -> event.channel is 0 and event.tempoBPM?
-	tempo = 130
+	tempo = 107
 	#60s----------160
 	#0.001 -------- x
 
@@ -83,7 +85,6 @@ openMidi = ->
 				else
 					event.playTime / beatDuration
 
-			#ja, horrible
 			{ note: dict.noteNames()[event.param1], length: duration }
 
 	buzz = new Buzzer 3
@@ -109,7 +110,7 @@ openMidi = ->
 board.on "ready", ->
 	console.log "Hello f*ckin' world :D"; debugger
 
-	#blinkTheLed()
-	playHappyBirthday()
-	#openMidi()
+	blinkTheLed()
+	#playHappyBirthday()
+	openMidi()
 #------------------------------------------------------------------------------------------
