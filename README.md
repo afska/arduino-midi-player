@@ -1,9 +1,10 @@
-## arduino-nodejs-coffee
-Template for controlling an *Arduino* from *nodejs* with the *Firmata* protocol. It uses *grunt* for compiling the *coffee-script* sources and watching changes for redeploy.
+## arduino-midi-player
+MIDI player with buzzers @ Arduino. The device is controlled from *nodejs* with the *Firmata* protocol. It uses *grunt* for compiling the *coffee-script* sources and watching changes for redeploy.
+This is recontra experimental. Sí, recontra. Tengo que editar el readme también :D
 
 ### setup
 ```bash
-npm install -g grunt-cli
+npm install -g grunt-cli #install the task-runner
 npm install #install dependencies
 grunt #run the app, and reload on source changes
 ```
