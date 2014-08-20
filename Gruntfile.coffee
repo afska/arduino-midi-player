@@ -20,8 +20,6 @@ module.exports = (grunt) ->
 		execute:
 			run:
 				src: [".js/main.js"]
-			exit:
-				src: ["exit.js"]
 
 		watch:
 			coffee:
