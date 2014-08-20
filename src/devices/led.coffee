@@ -3,7 +3,7 @@ board = include "board"
 module.exports = #---
 
 #------------------------------------------------------------------------------------------
-#a simple led.
+#A simple led.
 class Led extends DigitalDevice
 	#make the led to blink every *interval* ms.
 	blink: (interval) =>

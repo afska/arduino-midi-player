@@ -2,7 +2,7 @@ board = include "board"
 module.exports =
 
 #------------------------------------------------------------------------------------------
-#a device that can be pulsed with current (on) or not (off).
+#A device that can be pulsed with current (on) or not (off).
 class DigitalDevice
 	constructor: (@pin) ->
 		@isOn = false
