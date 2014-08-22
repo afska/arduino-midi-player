@@ -25,9 +25,7 @@ class MidiReader
 	toMelody: =>
 		tempo = @tempo()
 
-		#notes = @eventsIn(0) #for now, only 1 melody. todo: song
-			#.filter (event) -> event.type is 8 and (event.subtype is 8 or event.subtype is 9)
-		debugger
+		#for now, only 1 melody. todo: song
 		notes = @noteEventsIn 0
 
 		beatDuration = #s -> ms
@@ -35,11 +33,7 @@ class MidiReader
 
 		notes = notes
 			.map (event, i) =>
-				duration =
-					if notes[i+1]?
-						(notes[i+1].playTime - event.playTime) / (beatDuration * 4)
-					else
-						event.playTime / beatDuration
+				duration = @deltaEvents(event, notes[i + 1]) / (beatDuration * 4)
 
 				note: @noteDictionary.noteNames()[event.param1]
 				length: duration
@@ -60,17 +54,17 @@ class MidiReader
 	noteEventsIn: (track) =>
 		events = @eventsIn track
 
-		events = events
-			.map (event, i) =>
-				if event.subtype is @eventTypes.subTypes.off
-					event.subtype = @eventTypes.subTypes.on
-					event.param1 = @noteDictionary.positionOf "r"
+		convertRests = (events, next) =>
+			current = events.last()
+			if current.subtype is @eventTypes.subTypes.off
+				current.subtype = @eventTypes.subTypes.on
+				current.param1 = @noteDictionary.positionOf "r"
 
-					if @deltaEvents(event, events[i + 1]) is 0
-						event = null
+				if @deltaEvents(current, next) is 0
+					events.pop()
+			events.concat [next]
 
-				event
-		events.filter (event) => event?
+		events.reduce convertRests, [events.shift()]
 
 	deltaEvents: (current, next) =>
 		currentTime = current.playTime
