@@ -1,5 +1,5 @@
 VirtualDevice = include "devices/core/virtualDevice"
-NoteDictionary = include "midi/noteDictionary"
+NoteDictionary = include "midi/converters/noteDictionary"
 Q = require "q"
 board = include "board"
 module.exports =

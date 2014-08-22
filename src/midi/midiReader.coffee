@@ -1,8 +1,8 @@
 fs = require "fs"
 MIDIFile = require "midifile"
-NoteDictionary = include "midi/noteDictionary"
+NoteDictionary = include "midi/converters/noteDictionary"
+BeatConverter = include "midi/converters/beatConverter"
 Melody = include "midi/melody"
-BeatConversor = include "midi/beatConversor"
 include "utils/arrayUtils"
 include "utils/bufferUtils"
 module.exports =
@@ -26,7 +26,7 @@ class MidiReader
 		
 	toMelody: =>
 		tempo = @tempo()
-		conversor = new BeatConversor tempo
+		converter = new BeatConverter tempo
 		#for now, only 1 melody. todo: song
 
 		#song = new Song()
@@ -34,7 +34,7 @@ class MidiReader
 		notes = notes
 			.map (event, i) =>
 				note: @noteDictionary.noteNames()[event.param1]
-				length: conversor.toBeats @deltaEvents(event, notes[i + 1])
+				length: converter.toBeats @deltaEvents(event, notes[i + 1])
 
 		new Melody tempo, notes
 

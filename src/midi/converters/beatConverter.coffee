@@ -1,8 +1,8 @@
 module.exports =
 
 #------------------------------------------------------------------------------------------
-#A conversor between beats and milliseconds.
-class BeatConversor
+#A converter between beats and milliseconds.
+class BeatConverter
 	@Beat: 1/4
 	constructor: (@tempo) ->
 

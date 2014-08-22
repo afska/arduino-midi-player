@@ -3,7 +3,7 @@ module.exports =
 
 #------------------------------------------------------------------------------------------
 #A dictionary for finding all the playable notes with each frequency.
-# "c#5" is c sharp at the 5th octave, "r" is a rest.
+#"c#5" is c sharp at the 5th octave, "r" is a rest.
 class NoteDictionary
 	constructor: ->
 		@notes =

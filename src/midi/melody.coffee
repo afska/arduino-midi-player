@@ -1,4 +1,4 @@
-BeatConversor = include "midi/beatConversor"
+BeatConverter = include "midi/converters/beatConverter"
 EventEmitter = require("events").EventEmitter
 Q = require "q"
 include "utils/arrayUtils"
@@ -6,16 +6,16 @@ module.exports =
 
 #------------------------------------------------------------------------------------------
 #A monophonic 4/4 melody that can be played in a *player*.
+#*tempo* is in bpm
 #*notes* is, for example: [
 #    { note: "c#5", length: 1/4 }
 #    { note: "r", length: 1/8 }
 #]
-#*tempo* is in bpm
 class Melody
 	constructor: (@tempo, @notes) ->
 		@notes = @notes || []
 
-		@conversor = new BeatConversor @tempo
+		@converter = new BeatConverter @tempo
 
 		@playing = false
 		@events = new EventEmitter()
@@ -30,7 +30,7 @@ class Melody
 		playAllNotes = (previousPromise, noteInfo) =>
 			previousPromise.then =>
 				@events.emit "note", noteInfo
-				player.playNote noteInfo.note, @conversor.toMs(noteInfo.length)
+				player.playNote noteInfo.note, @converter.toMs(noteInfo.length)
 
 		seed = Q.defer() ; seed.resolve()
 		@notes
