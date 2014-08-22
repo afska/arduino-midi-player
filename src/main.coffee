@@ -6,7 +6,7 @@ Melody = include "devices/buzzer/melody"
 
 fs = require "fs"
 MIDIFile = require "midifile"
-NoteDictionary = include "devices/buzzer/noteDictionary"
+NoteDictionary = include "midi/noteDictionary"
 
 board = include "board"
 module.exports =
