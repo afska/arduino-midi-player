@@ -2,7 +2,7 @@ include "utils/arrayUtils"
 module.exports =
 
 #------------------------------------------------------------------------------------------
-#A 4/4 track, composed by many *melodies* that can be played in a buzzer.
+#A 4/4 track, composed by many *melodies* that can be played in a *player*.
 class Track
 	constructor: (@melodies) ->
 

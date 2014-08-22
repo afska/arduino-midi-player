@@ -13,3 +13,6 @@ _ = require "lodash"
 	Array::[functionName] = ->
 		args = Array::slice.call arguments
 		_[functionName].apply @, [@].concat args
+
+Array::findProperty = (property) ->
+	@find((it) -> it[property]?)?[property]

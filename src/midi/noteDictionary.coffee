@@ -2,10 +2,11 @@ include "utils/arrayUtils"
 module.exports =
 
 #------------------------------------------------------------------------------------------
-#A dictionary for finding all the playable notes with each frequency. 
+#A dictionary for finding all the playable notes with each frequency.
+# "c#5" is c sharp at the 5th octave, "r" is a rest.
 class NoteDictionary
 	constructor: ->
-		@notes = 
+		@notes =
 			@noteNames().map (note) =>
 				note: note
 				frequency: @frequencyOf note
@@ -13,7 +14,7 @@ class NoteDictionary
 
 	#all available note names.
 	noteNames: =>
-		[0 .. 10]
+		names = [0 .. 10]
 			.map (octave) =>
 				[
 					"c", "c#", "d"
@@ -22,15 +23,17 @@ class NoteDictionary
 					"a", "a#", "b"
 				].map (note) => "#{note}#{octave}"
 			.flatten()
+			.concat "r"
 
 	#position of a *note* in the notes array.
 	# e.g. d#0 is 3
-	positionOf: (note) =>
-		@noteNames().indexOf note
+	positionOf: (note) => @noteNames().indexOf note
 
 	#frequency of a *note*.
 	# 440 * (2^(1/12))^semitonesFromA4
 	frequencyOf: (note) =>
+		if note is "r" then return 0
+
 		twelthRootOf2 = Math.pow 2, 1/12
 		a4 = 440
 

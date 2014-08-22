@@ -19,7 +19,7 @@ class Buzzer extends VirtualDevice
 		if !note? then return @_playRest duration
 
 		high = @notes
-			.find((noteInfo) => noteInfo.note == note)
+			.find((noteInfo) => noteInfo.note is note)
 			.highTime
 
 		@_playTone high, duration

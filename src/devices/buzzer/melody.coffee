@@ -4,7 +4,7 @@ include "utils/arrayUtils"
 module.exports =
 
 #------------------------------------------------------------------------------------------
-#A monotrack 4/4 melody that can be played in a buzzer.
+#A monotrack 4/4 melody that can be played in a *player*.
 #*notes* is, for example: [
 #    { note: "c#5", length: 1/4 }
 #    { note: null, length: 1/8 }
