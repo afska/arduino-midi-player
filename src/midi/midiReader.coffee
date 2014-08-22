@@ -58,13 +58,24 @@ class MidiReader
 			]
 
 	noteEventsIn: (track) =>
-		@eventsIn(track)
-			.map (event) =>
-				if event.subtype is @eventTypes.noteOff
-					#a note "off" is a rest "on" in the track
-					event.subtype = @eventTypes.noteOn
+		events = @eventsIn track
+
+		events = events
+			.map (event, i) =>
+				if event.subtype is @eventTypes.subTypes.off
+					event.subtype = @eventTypes.subTypes.on
 					event.param1 = @noteDictionary.positionOf "r"
-				else event
+
+					if @deltaEvents(event, events[i + 1]) is 0
+						event = null
+
+				event
+		events.filter (event) => event?
+
+	deltaEvents: (current, next) =>
+		currentTime = current.playTime
+		if !next? then return currentTime
+		next.playTime - currentTime
 
 	tempo: => @events().findProperty "tempoBPM"
 
