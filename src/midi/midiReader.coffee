@@ -1,7 +1,7 @@
 fs = require "fs"
 MIDIFile = require "midifile"
 NoteDictionary = include "midi/noteDictionary"
-Melody = include "devices/buzzer/melody"
+Melody = include "midi/melody"
 BeatConversor = include "midi/beatConversor"
 include "utils/arrayUtils"
 include "utils/bufferUtils"
@@ -27,8 +27,9 @@ class MidiReader
 	toMelody: =>
 		tempo = @tempo()
 		conversor = new BeatConversor tempo
-
 		#for now, only 1 melody. todo: song
+
+		#song = new Song()
 		notes = @noteEventsIn 0
 		notes = notes
 			.map (event, i) =>
