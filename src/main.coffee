@@ -26,24 +26,23 @@ playInBuzzer = (melody) ->
 	melody.playWith buzzer
 
 playHappyBirthday = ->
-	playInBuzzer new Melody [
+	playInBuzzer new Melody 120, [
 		{ note: "c5", length: 1/8 }
-		{ note: null, length: 1/16 }
+		{ note: "r", length: 1/16 }
 		{ note: "c5", length: 1/16 }
 		{ note: "d5", length: 1/4 }
 		{ note: "c5", length: 1/4 }
 		{ note: "f5", length: 1/4 }
 		{ note: "e5", length: 1/4 }
-		{ note: null, length: 1/4 }
+		{ note: "r", length: 1/4 }
 		{ note: "c5", length: 1/8 }
-		{ note: null, length: 1/16 }
+		{ note: "r", length: 1/16 }
 		{ note: "c5", length: 1/16 }
 		{ note: "d5", length: 1/4 }
 		{ note: "c5", length: 1/4 }
 		{ note: "g5", length: 1/4 }
 		{ note: "f5", length: 1/4 }
-		{ note: null, length: 1/4 }
-	], 120
+	]
 
 openMidi = ->
 	playInBuzzer new MidiReader("/home/rodri/Desktop/asa.mid").toMelody()

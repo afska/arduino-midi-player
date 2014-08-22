@@ -2,12 +2,14 @@ fs = require "fs"
 MIDIFile = require "midifile"
 NoteDictionary = include "midi/noteDictionary"
 Melody = include "devices/buzzer/melody"
+BeatConversor = include "midi/beatConversor"
 include "utils/arrayUtils"
 include "utils/bufferUtils"
 module.exports =
 
 #------------------------------------------------------------------------------------------
 #A MIDI reader that generates *song*s by parsing the file
+#todo: finish, make docs
 class MidiReader
 	constructor: (filePath) ->
 		buffer = fs
@@ -24,21 +26,16 @@ class MidiReader
 		
 	toMelody: =>
 		tempo = @tempo()
+		conversor = new BeatConversor tempo
 
 		#for now, only 1 melody. todo: song
 		notes = @noteEventsIn 0
-
-		beatDuration = #s -> ms
-			(60 / tempo) * 1000
-
 		notes = notes
 			.map (event, i) =>
-				duration = @deltaEvents(event, notes[i + 1]) / (beatDuration * 4)
-
 				note: @noteDictionary.noteNames()[event.param1]
-				length: duration
+				length: conversor.toBeats @deltaEvents(event, notes[i + 1])
 
-		new Melody notes, tempo
+		new Melody tempo, notes
 
 	events: => @file.getEvents()
 

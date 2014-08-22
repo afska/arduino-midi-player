@@ -14,10 +14,7 @@ class Buzzer extends VirtualDevice
 		@notes = new NoteDictionary().notes
 
 	#play a *note* (e.g. "a#4") for *duration* ms.
-	# (a null is a rest)
 	playNote: (note, duration) =>
-		if !note? then return @_playRest duration
-
 		high = @notes
 			.find((noteInfo) => noteInfo.note is note)
 			.highTime
@@ -35,11 +32,5 @@ class Buzzer extends VirtualDevice
 			deferred.resolve()
 
 		setTimeout stop, duration
-		deferred.promise
-
-	#play a rest of *duration* ms long.
-	_playRest: (duration) =>
-		deferred = Q.defer()
-		setTimeout deferred.resolve, duration
 		deferred.promise
 #------------------------------------------------------------------------------------------
