@@ -16,3 +16,13 @@ _ = require "lodash"
 
 Array::findProperty = (property) ->
 	@find((it) -> it[property]?)?[property]
+
+Array::sum = (mapper) ->
+	@
+		.map(mapper)
+		.reduce(
+			(sum, num) -> sum + num,
+			0
+		)
+
+Array::withoutLast = -> @slice 0, -1
