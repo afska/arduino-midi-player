@@ -1,9 +1,7 @@
 MidiFile = include "midi/midiFile"
-NoteDictionary = include "midi/converters/noteDictionary"
-BeatConverter = include "midi/converters/beatConverter"
 SongBuilder = include "midi/builders/songBuilder"
+BeatConverter = include "midi/converters/beatConverter"
 include "utils/arrayUtils"
-include "utils/bufferUtils"
 module.exports =
 
 #------------------------------------------------------------------------------------------
@@ -11,7 +9,6 @@ module.exports =
 #todo: finish, make docs
 class MidiReader
 	constructor: (filePath) ->
-		@noteDictionary = new NoteDictionary()
 		@file = new MidiFile filePath
 		
 	toMelody: =>

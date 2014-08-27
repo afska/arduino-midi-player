@@ -1,6 +1,6 @@
 VirtualDevice = include "devices/core/virtualDevice"
-NoteDictionary = include "midi/converters/noteDictionary"
-Q = require "q"
+noteDictionary = include "midi/converters/noteDictionary"
+q = require "q"
 board = include "board"
 module.exports =
 
@@ -11,14 +11,10 @@ class Buzzer extends VirtualDevice
 
 	constructor: (@pin) ->
 		super Buzzer.LogicPort
-		@notes = new NoteDictionary().notes
 
 	#play a *note* (e.g. "a#4") for *duration* ms.
 	playNote: (note, duration) =>
-		high = @notes
-			.find((noteInfo) => noteInfo.note is note)
-			.highTime
-
+		high = noteDictionary.get(note).highTime
 		@_playTone high, duration
 
 	#play a tone creating a wave with *high* ns
@@ -27,7 +23,7 @@ class Buzzer extends VirtualDevice
 		high = Math.round high
 		@send [@pin, high]
 
-		deferred = Q.defer()
+		deferred = q.defer()
 		stop = =>
 			@send [@pin, 0]
 			deferred.resolve()

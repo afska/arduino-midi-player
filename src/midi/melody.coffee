@@ -1,5 +1,5 @@
 EventEmitter = require("events").EventEmitter
-Q = require "q"
+q = require "q"
 include "utils/arrayUtils"
 module.exports =
 
@@ -27,7 +27,7 @@ class Melody
 				@events.emit "note", noteInfo
 				player.playNote noteInfo.note, noteInfo.duration
 
-		seed = Q.defer() ; seed.resolve()
+		seed = q.defer() ; seed.resolve()
 		@notesWithDuration()
 			.reduce(playAllNotes, seed.promise)
 			.then @_end

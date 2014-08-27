@@ -23,7 +23,7 @@ class MelodyBuilder extends Melody
 	#add a *noteInfo*.
 	add: (noteInfo) => @notes.push noteInfo
 
-	#fill the melody with rests until it's *duration* ms long
+	#fill the melody with rests until it's *duration* ms long.
 	enlargeTo: (duration) =>
 		delta = duration - @duration()
 		if delta > 0

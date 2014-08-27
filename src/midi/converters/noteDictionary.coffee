@@ -1,5 +1,5 @@
 include "utils/arrayUtils"
-module.exports =
+module.exports = new #singleton
 
 #------------------------------------------------------------------------------------------
 #A dictionary for finding all the playable notes with each frequency.
@@ -9,8 +9,9 @@ class NoteDictionary
 		@notes =
 			@noteNames().map (note) =>
 				note: note
-				frequency: @frequencyOf note
-				highTime: @highTimeOf note
+				frequency: @_frequencyOf note
+				highTime: @_highTimeOf note
+
 
 	#all available note names.
 	noteNames: =>
@@ -25,13 +26,17 @@ class NoteDictionary
 			.flatten()
 			.concat "r"
 
+	#get all info of a note.
+	get: (note) =>
+		@notes.find (noteInfo) => noteInfo.note is note
+
 	#position of a *note* in the notes array.
 	# e.g. d#0 is 3
 	positionOf: (note) => @noteNames().indexOf note
 
 	#frequency of a *note*.
 	# 440 * (2^(1/12))^semitonesFromA4
-	frequencyOf: (note) =>
+	_frequencyOf: (note) =>
 		if note is "r" then return 0
 
 		twelthRootOf2 = Math.pow 2, 1/12
@@ -43,7 +48,7 @@ class NoteDictionary
 	#high time of a wave in a *note*: one half
 	#of the period is HIGH, the other one is LOW.
 	# (period / 2) * 1000000 [s -> us]
-	highTimeOf: (note) =>
-		period = 1 / @frequencyOf note
+	_highTimeOf: (note) =>
+		period = 1 / @_frequencyOf note
 		(period / 2) * 1000000
 #------------------------------------------------------------------------------------------
