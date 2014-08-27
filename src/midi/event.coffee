@@ -3,7 +3,7 @@ noteDictionary = include "midi/converters/noteDictionary"
 module.exports =
 
 #------------------------------------------------------------------------------------------
-#A MIDI event
+#A MIDI event.
 class Event
 	@Types:
 		note: 8
@@ -13,22 +13,28 @@ class Event
 	constructor: (json) ->
 		extend true, @, json
 
+	#if it's a note event.
 	isNote: =>
 		@type is Event.Types.note and
 		(@isNoteOn() or @isNoteOff())
 
+	#if it's a note on event.
 	isNoteOn: =>
 		@subtype is Event.Types.subTypes.on
 
+	#if it's a note off event.
 	isNoteOff: =>
 		@subtype is Event.Types.subTypes.off
 
+	#name of the note.
 	note: => noteDictionary.noteNames()[@param1]
 
+	#convert the event to a "note on" event with a rest.
 	convertToRest: =>
 		@subtype = Event.Types.subTypes.on
 		@param1 = noteDictionary.positionOf "r"
 
+	#delta time (in ms) with another next event.
 	deltaWith: (next) =>
 		if !next? then return 0
 		next.playTime - @playTime

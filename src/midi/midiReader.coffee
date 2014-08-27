@@ -5,15 +5,13 @@ include "utils/arrayUtils"
 module.exports =
 
 #------------------------------------------------------------------------------------------
-#A MIDI reader that generates *songs* by parsing the file
-#todo: finish, make docs
+#A MIDI reader that generates *songs* by parsing the file.
 class MidiReader
 	constructor: (filePath) ->
 		@file = new MidiFile filePath
 		
+	#convert the file to a *song*.
 	toMelody: =>
-		#monotempo for now.
-		#monotrack for now, but 1 midi track can be N MidiReader's tracks.
 		tempo = @file.tempo()
 		converter = new BeatConverter tempo
 
@@ -43,6 +41,8 @@ class MidiReader
 
 		todas
 
+	#convert all the "note off" events to rests.
+	#the ones that have no duration will be removed.
 	getNotesOf: (track) =>
 		convertRests = (events, next) =>
 			current = events.last()
