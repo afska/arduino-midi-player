@@ -68,30 +68,36 @@ class MidiReader
 			]
 
 	noteEventsIn: (track) =>
-		events = @noteEvents().filter (event) => event.track is track
+		events = @noteEvents()
+		if @totalTracks() > 1
+			events = events.filter (event) => event.track is track
+
+		makeRest = (event) =>
+			event.subtype = @eventTypes.subTypes.on
+			event.param1 = @noteDictionary.positionOf "r"
 
 		convertRests = (events, next) =>
 			current = events.last()
 
 			if current.subtype is @eventTypes.subTypes.off
-				current.subtype = @eventTypes.subTypes.on
-				current.param1 = @noteDictionary.positionOf "r"
-
+				makeRest current
 				if @deltaEvents(current, next) is 0
 					events.pop()
 
 			events.concat [next]
 
-		events
-			.reduce(convertRests, [events.shift()])
-			.withoutLast() #ojo con esto, necesita un silencio al final eh! nop.
+		converted = events.reduce convertRests, [events.shift()]
+		makeRest converted.last()
+		converted
 
 	deltaEvents: (current, next) =>
 		currentTime = current.playTime
-		if !next? then return currentTime #la diferencia de tiempo con el último evento es el tiempo actual. BIEN LÓGICO (?)
+		if !next? then return 0
 		next.playTime - currentTime
 
 	tempo: => @events().findProperty "tempoBPM"
 
-	totalTracks: => @file.tracks.length
+	totalTracks: =>
+		tracks = @file.tracks.length
+		if tracks is 0 then 1 else tracks
 #------------------------------------------------------------------------------------------

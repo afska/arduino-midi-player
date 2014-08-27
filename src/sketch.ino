@@ -15,17 +15,34 @@
 #define REGISTER_NOT_SPECIFIED -1
 
 //--------------------------------------------------
+//Pin for sending data through analogWrite:
 #define BUZZER_LOGIC_PORT 3
 
+//Pin for the buzzer that uses tone() (for higher pitch):
+#define BUZZER_TONE_PORT 3
+
+#define PIN_FROM 3 //start of the buzzers array
+#define PIN_TO 7 //end of the buzzers array
+
 typedef struct {
+  //Activated or not:
   boolean activated;
+
+  //If it's HIGH or LOW:
   boolean on;
+
+  //Time that it will be in HIGH (microseconds):
   unsigned int highTime;
+
+  //Last time the *on* value has changed:
   unsigned long lastTime;
 } buzzer;
 
+//Array of buzzers:
 buzzer buzzers[TOTAL_PINS];
-byte next_buzzer = BUZZER_LOGIC_PORT;
+
+//The next message will belong to this buzzer:
+byte next_buzzer = BUZZER_TONE_PORT;
 //--------------------------------------------------
 
 int analogInputsToReport = 0;
@@ -207,17 +224,28 @@ void analogWriteCallback(byte pin, int value) {
   //--------------------------------------------------
   if (pin != BUZZER_LOGIC_PORT) return;
 
-  if (value > 0 && value < TOTAL_PINS) {
+  if (value >= PIN_FROM && value <= PIN_TO) {
+    //Set the buzzer for the next message:
     next_buzzer = value;
   } else {
-    pinMode(next_buzzer, OUTPUT);
-    buzzers[next_buzzer].activated = value != 0;
-    buzzers[next_buzzer].on = false;
-    buzzers[next_buzzer].highTime = value;
-    buzzers[next_buzzer].lastTime = micros();
+    if (next_buzzer == BUZZER_TONE_PORT) {
+      //(De)activate the tone buzzer:
+      if (value > 0)
+        tone(BUZZER_TONE_PORT, 1000000 / (value * 2));
+      else
+        noTone(BUZZER_TONE_PORT);
+    } else {
+      //(De)activate the normal buzzer:
+      pinMode(next_buzzer, OUTPUT);
+      buzzers[next_buzzer].activated = value != 0;
+      buzzers[next_buzzer].on = false;
+      buzzers[next_buzzer].highTime = value;
+      buzzers[next_buzzer].lastTime = micros();
 
-    if (value == 0)
-      digitalWrite(next_buzzer, LOW);
+      if (value == 0) {
+        digitalWrite(next_buzzer, LOW);
+      }
+    }
   }
   //--------------------------------------------------
 }
@@ -521,7 +549,8 @@ void loop()
   }
 
   //--------------------------------------------------
-  for(int i=1; i < TOTAL_PINS; i++) {
+  //Toggle activated pins (if it's time to do it):
+  for(int i = PIN_FROM; i <= PIN_TO; i++) {
     if (buzzers[i].activated) {
       unsigned long newTime = micros();
       if (newTime - buzzers[i].lastTime >= buzzers[i].highTime) {
