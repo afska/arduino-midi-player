@@ -20,21 +20,14 @@ class MidiReader
 			song = new SongBuilder tempo
 
 			debugger
-			notes = @getNotesOf track
-			notes.forEach (event, i) =>
+			events = @getNotesOf track
+			events.forEach (event, i) =>
 				melody = song.getIddleMelody Math.round(event.playTime)
+				duration = event.durationIn events.slice(i)
 				
-				getDuration = => #dónde va esto
-					next = null
-					for offset in [0 .. notes.length - 1 - i]
-						if event.deltaWith(notes[i + offset]) isnt 0
-							next = notes[i + offset]
-							break
-					event.deltaWith next
-
 				melody.add
 					note: event.note()
-					length: converter.toBeats getDuration()
+					length: converter.toBeats duration
 
 			song.melodies
 			todas = todas.concat song.melodies #el encapsulamiento es de puto

@@ -38,4 +38,11 @@ class Event
 	deltaWith: (next) =>
 		if !next? then return 0
 		next.playTime - @playTime
+
+	#duration of the note based on the *nextEvents*.
+	durationIn: (nextEvents) =>
+		next = nextEvents
+			.find (it) => @deltaWith(it) isnt 0
+
+		@deltaWith next
 #------------------------------------------------------------------------------------------
