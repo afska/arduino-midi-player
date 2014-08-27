@@ -4,6 +4,7 @@ Led = include "devices/led"
 Buzzer = include "devices/buzzer"
 Melody = include "midi/melody"
 MidiReader = include "midi/midiReader"
+NoteDictionary = include "midi/converters/noteDictionary"
 
 board = include "board"
 module.exports =
