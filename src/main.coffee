@@ -4,70 +4,67 @@ Led = include "devices/led"
 Buzzer = include "devices/buzzer"
 Melody = include "midi/melody"
 MidiReader = include "midi/midiReader"
+NoteDictionary = include "midi/converters/noteDictionary"
 
 board = include "board"
 module.exports =
 
 #------------------------------------------------------------------------------------------
-blinkTheLed = -> new Led(13).blink 200
+class Example
+	constructor: ->
+		console.log "Hello f*ckin' world :D"; debugger
 
-playInBuzzer = (melody, pin) ->
-	buzzer = new Buzzer pin
+		@blinkTheLed()
+		#@playHappyBirthday()
+		@playMidi()
 
-	melody.events
-		.on "start", -> console.log "start!"
+	blinkTheLed: => new Led(13).blink 200
 
-	melody.events.on "note", (noteInfo) ->
-		console.log "[buzzer #{pin}] playing a #{noteInfo.note} of #{noteInfo.length}"
+	playHappyBirthday: =>
+		@_playInBuzzer new Melody(120, [
+			{ note: "c4", length: 1/8 }
+			{ note: "r", length: 1/16 }
+			{ note: "c4", length: 1/16 }
+			{ note: "d4", length: 1/4 }
+			{ note: "c4", length: 1/4 }
+			{ note: "f4", length: 1/4 }
+			{ note: "e4", length: 1/4 }
+			{ note: "r", length: 1/4 }
+			{ note: "c4", length: 1/8 }
+			{ note: "r", length: 1/16 }
+			{ note: "c4", length: 1/16 }
+			{ note: "d4", length: 1/4 }
+			{ note: "c4", length: 1/4 }
+			{ note: "g4", length: 1/4 }
+			{ note: "f4", length: 1/4 }
+		]), 3
 
-	melody.events
-		.on "end", -> console.log "end!"
+	playMidi: =>
+			#pin = 4
+			melodies = new MidiReader("/home/rodri/Desktop/asa.mid").toMelody()
+			#for m in melodies
+			#	playInBuzzer m, pin
+			#	pin++
+			# ver cómo solucionar lo del let ring: la distancia no es 0 pero ponele
 
-	melody.playWith buzzer
+			@_playInBuzzer melodies[0], 3
+			@_playInBuzzer melodies[1], 4
+			@_playInBuzzer melodies[2], 5
+			@_playInBuzzer melodies[3], 6
 
-playHappyBirthday = ->
-	melo = new Melody 120, [
-		{ note: "c8", length: 1/8 }
-		{ note: "r", length: 1/16 }
-		{ note: "c8", length: 1/16 }
-		{ note: "d8", length: 1/4 }
-		{ note: "c8", length: 1/4 }
-		{ note: "f8", length: 1/4 }
-		{ note: "e8", length: 1/4 }
-		{ note: "r", length: 1/4 }
-		{ note: "c8", length: 1/8 }
-		{ note: "r", length: 1/16 }
-		{ note: "c8", length: 1/16 }
-		{ note: "d8", length: 1/4 }
-		{ note: "c8", length: 1/4 }
-		{ note: "g8", length: 1/4 }
-		{ note: "f8", length: 1/4 }
-	]
+	_playInBuzzer: (melody, pin) =>
+		buzzer = new Buzzer pin
 
-	playInBuzzer melo, 11
+		melody.events
+			.on "start", -> console.log "start!"
 
-openMidi = ->
-	#pin = 4
-	melodies = new MidiReader("/home/rodri/Desktop/asa.mid").toMelody()
-	#for m in melodies
-	#	playInBuzzer m, pin
-	#	pin++
-	# ver cómo solucionar lo del let ring: la distancia no es 0 pero ponele
+		melody.events.on "note", (noteInfo) ->
+			console.log "[buzzer #{pin}] playing a #{noteInfo.note} of #{noteInfo.length}"
 
-	#playInBuzzer melodies[2], 4
-	#playInBuzzer melodies[3], 5
-	#playInBuzzer melodies[5], 6
-	#playInBuzzer melodies[7], 7
+		melody.events
+			.on "end", -> console.log "end!"
 
-	playInBuzzer melodies[0], 11
-	playInBuzzer melodies[1], 5
-	playInBuzzer melodies[2], 6
-	playInBuzzer melodies[3], 7
+		melody.playWith buzzer
 
-board.on "ready", ->
-	console.log "Hello f*ckin' world :D"; debugger
-
-	blinkTheLed()
-	playHappyBirthday()
-	#openMidi()
+board.on "ready", -> new Example()
 #------------------------------------------------------------------------------------------

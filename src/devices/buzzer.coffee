@@ -24,6 +24,7 @@ class Buzzer extends VirtualDevice
 	#play a tone creating a wave with *high* ns
 	#of high time, with *duration* ms long.
 	_playTone: (high, duration) =>
+		high = Math.round high
 		@send [@pin, high]
 
 		deferred = Q.defer()
