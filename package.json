@@ -15,6 +15,7 @@
 
 		"johnny-five": "*",
 		"q": "*",
+		"extend": "*",
 		"lodash": "*",
 		"midifile": "*"
 	}
