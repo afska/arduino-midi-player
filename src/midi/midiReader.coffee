@@ -1,5 +1,6 @@
 MidiFile = include "midi/midiFile"
 SongBuilder = include "midi/builders/songBuilder"
+Song = include "midi/song"
 BeatConverter = include "midi/converters/beatConverter"
 include "utils/arrayUtils"
 module.exports =
@@ -11,28 +12,24 @@ class MidiReader
 		@file = new MidiFile filePath
 		
 	#convert the file to a *song*.
-	toMelody: =>
+	toSong: =>
 		tempo = @file.tempo()
 		converter = new BeatConverter tempo
 
-		todas = []
-		for track in [0 ... @file.totalTracks()]
+		addNotes = (melodies, track) =>
 			song = new SongBuilder tempo
-
-			debugger
 			events = @getNotesOf track
+
 			events.forEach (event, i) =>
 				melody = song.getIddleMelody Math.round(event.playTime)
-				duration = event.durationIn events.slice(i)
-				
+
 				melody.add
 					note: event.note()
-					length: converter.toBeats duration
+					length: converter.toBeats event.durationIn(events.slice(i))
+			
+			melodies.concat song.melodies
 
-			song.melodies
-			todas = todas.concat song.melodies #el encapsulamiento es de puto
-
-		todas
+		new Song [0 ... @file.totalTracks()].reduce(addNotes, []), tempo
 
 	#convert all the "note off" events to rests.
 	#the ones that have no duration will be removed.

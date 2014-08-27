@@ -40,10 +40,10 @@ class Example
 
 	playMidi: =>
 		pin = 3
-		melodies = new MidiReader("/home/rodri/Desktop/asa.mid").toMelody()
-		for m in melodies
-			@_playInBuzzer m, pin
-			pin++
+		new MidiReader("/home/rodri/Desktop/asa.mid") #todo: deshardcodear
+			.toSong()
+			.forEachMelody (melody) =>
+				@_playInBuzzer melody, pin++
 
 	_playInBuzzer: (melody, pin) =>
 		buzzer = new Buzzer pin
