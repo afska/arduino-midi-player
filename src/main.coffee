@@ -20,7 +20,7 @@ class Example
 	blinkTheLed: => new Led(13).blink 200
 
 	playHappyBirthday: =>
-		@_playInBuzzer new Melody(120, [
+		@_playInBuzzer new Melody([
 			{ note: "c4", length: 1/8 }
 			{ note: "r", length: 1/16 }
 			{ note: "c4", length: 1/16 }
@@ -36,7 +36,7 @@ class Example
 			{ note: "c4", length: 1/4 }
 			{ note: "g4", length: 1/4 }
 			{ note: "f4", length: 1/4 }
-		]), 3
+		], 120), 3
 
 	playMidi: =>
 		pin = 3

@@ -2,14 +2,13 @@ fs = require "fs"
 MIDIFile = require "midifile"
 NoteDictionary = include "midi/converters/noteDictionary"
 BeatConverter = include "midi/converters/beatConverter"
-Melody = include "midi/melody"
-Song = include "midi/song"
+SongBuilder = include "midi/builders/songBuilder"
 include "utils/arrayUtils"
 include "utils/bufferUtils"
 module.exports =
 
 #------------------------------------------------------------------------------------------
-#A MIDI reader that generates *song*s by parsing the file
+#A MIDI reader that generates *songs* by parsing the file
 #todo: finish, make docs
 class MidiReader
 	constructor: (filePath) ->
@@ -33,7 +32,7 @@ class MidiReader
 
 		todas = []
 		for track in [0 ... @totalTracks()]
-			song = new Song tempo
+			song = new SongBuilder tempo
 
 			debugger
 			notes = @noteEventsIn track

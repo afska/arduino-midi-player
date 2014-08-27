@@ -1,4 +1,3 @@
-BeatConverter = include "midi/converters/beatConverter"
 EventEmitter = require("events").EventEmitter
 Q = require "q"
 include "utils/arrayUtils"
@@ -12,34 +11,9 @@ module.exports =
 #    { note: "r", length: 1/8 }
 #]
 class Melody
-	constructor: (@tempo, notes) ->
-		@notes = notes || []
-
-		@converter = new BeatConverter @tempo
-
+	constructor: (@notes, @tempo) ->
 		@playing = false
 		@events = new EventEmitter()
-
-	#todo: extraer estos métodos en un Builder...
-
-	#add a *noteInfo*.
-	add: (noteInfo) => @notes.push noteInfo
-
-	#fill the melody with rests until it's *duration* ms long
-	enlargeTo: (duration) =>
-		delta = duration - @duration()
-		if delta > 0
-			@add note: "r", length: @converter.toBeats delta
-
-	#append the duration in ms to the notes.
-	notesWithDuration: =>
-		@notes.map (noteInfo) =>
-			noteInfo.duration = @converter.toMs noteInfo.length
-			noteInfo
-
-	#duration of the melody in ms.
-	duration: =>
-		@notesWithDuration().sum (noteInfo) => noteInfo.duration
 
 	#play the melody with a *player*.
 	#a player is an object that understands:
