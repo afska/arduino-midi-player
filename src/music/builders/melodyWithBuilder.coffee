@@ -4,7 +4,7 @@ module.exports =
 
 #------------------------------------------------------------------------------------------
 #A builder for quickly making *melodies*.
-class MelodyBuilder extends Melody
+class MelodyWithBuilder extends Melody
 	constructor: -> super []
 
 	#duration of the melody in ms, without a final rest.

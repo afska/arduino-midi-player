@@ -1,16 +1,16 @@
 Song = include "music/song"
-MelodyBuilder = include "music/builders/melodyBuilder"
+MelodyWithBuilder = include "music/builders/melodyWithBuilder"
 include "utils/arrayUtils"
 module.exports =
 
 #------------------------------------------------------------------------------------------
 #A builder for quickly making *songs*.
-class SongBuilder extends Song
+class SongWithBuilder extends Song
 	constructor: -> super []
 	
 	#add a empty melody.
 	add: =>
-		melody = new MelodyBuilder @tempo, []
+		melody = new MelodyWithBuilder @tempo, []
 		@melodies.push melody
 		melody
 
@@ -25,7 +25,9 @@ class SongBuilder extends Song
 		melody
 
 	#remove the melodies that are composed only by silences.
+	#returns the song.
 	clean: =>
 		@melodies = @melodies.filter (melody) =>
 			melody.notes.some (noteInfo) => !noteInfo.isRest()
+		@
 #------------------------------------------------------------------------------------------

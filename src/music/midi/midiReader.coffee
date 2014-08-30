@@ -1,5 +1,5 @@
 MidiFile = include "music/midi/midiFile"
-SongBuilder = include "music/builders/songBuilder"
+SongWithBuilder = include "music/builders/songWithBuilder"
 include "utils/arrayUtils"
 module.exports =
 
@@ -11,7 +11,7 @@ class MidiReader
 		
 	#convert the file to a *song*.
 	toSong: =>
-		song = new SongBuilder()
+		song = new SongWithBuilder()
 		@allEvents().forEach (event) =>
 			melody = song.getIddleMelody Math.round(event.playTime)
 
