@@ -9,10 +9,13 @@ _ = require "lodash"
 	"reject", "remove", "rest", "sample", "shuffle"
 	"size", "sortBy", "sortedIndex", "union", "uniq"
 	"where", "without", "xor", "zip", "zipObject"
+	"cloneDeep"
 ].forEach (functionName) ->
 	Array::[functionName] = ->
 		args = Array::slice.call arguments
 		_[functionName].apply @, [@].concat args
+
+Array::isEmpty = -> @length is 0
 
 Array::findProperty = (property) ->
 	@find((it) -> it[property]?)?[property]

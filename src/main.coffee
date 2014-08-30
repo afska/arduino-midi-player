@@ -2,8 +2,8 @@ require "./utils/include"
 
 Led = include "devices/led"
 Buzzer = include "devices/buzzer"
-Melody = include "midi/melody"
-MidiReader = include "midi/midiReader"
+Melody = include "music/melody"
+MidiReader = include "music/midi/midiReader"
 
 board = include "board"
 module.exports =
@@ -52,7 +52,7 @@ class Example
 			.on "start", -> console.log "start!"
 
 		melody.events.on "note", (noteInfo) ->
-			console.log "[buzzer #{pin}] playing a #{noteInfo.note} of #{noteInfo.length}"
+			console.log "[buzzer #{pin}] playing a #{noteInfo.note} for #{noteInfo.duration} ms"
 
 		melody.events
 			.on "end", -> console.log "end!"

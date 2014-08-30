@@ -1,10 +1,12 @@
+extend = require "extend"
 module.exports =
 
 #------------------------------------------------------------------------------------------
-#A 4/4 song, composed by many *melodies* sounding together.
-class Song
-	constructor: (@melodies, @tempo) ->
+#Information of a note (note, length, duration).
+class Note
+	constructor: (json) ->
+		extend true, @, json
+		@duration = Math.round @duration
 
-	#invoke *fn* for each melody of the song.
-	forEachMelody: (fn) => @melodies.forEach fn
+	isRest: => @note is "r"
 #------------------------------------------------------------------------------------------

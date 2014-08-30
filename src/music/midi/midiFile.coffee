@@ -1,6 +1,6 @@
 MIDIFile = require "midifile"
+Event = include "music/midi/event"
 fs = require "fs"
-Event = include "midi/event"
 include "utils/arrayUtils"
 include "utils/bufferUtils"
 module.exports =
@@ -21,15 +21,12 @@ class MidiFile extends MIDIFile
 	noteEvents: =>
 		@events.filter (event) => event.isNote()
 
-	#note events in one track.
+	#note events in one *track*.
 	noteEventsIn: (track) =>
 		events = @noteEvents()
 		if @totalTracks() > 1
 			events = events.filter (event) => event.track is track
 		events
-
-	#first tempo of the file.
-	tempo: => @events.findProperty "tempoBPM"
 
 	#number of tracks.
 	totalTracks: =>

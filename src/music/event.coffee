@@ -1,5 +1,5 @@
 extend = require "extend"
-noteDictionary = include "midi/converters/noteDictionary"
+noteDictionary = include "music/converters/noteDictionary"
 module.exports =
 
 #------------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ class Event
 		@subtype = Event.Types.subTypes.on
 		@param1 = noteDictionary.positionOf "r"
 
-	#delta time (in ms) with another next event.
+	#delta time (in ms) with another *next* event.
 	deltaWith: (next) =>
 		if !next? then return 0
 		next.playTime - @playTime

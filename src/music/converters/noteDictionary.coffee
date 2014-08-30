@@ -26,12 +26,12 @@ class NoteDictionary
 			.flatten()
 			.concat "r"
 
-	#get all info of a note.
+	#get all the info of a note.
 	get: (note) =>
 		@notes.find (noteInfo) => noteInfo.note is note
 
 	#position of a *note* in the notes array.
-	# e.g. d#0 is 3
+	# e.g. "d#0" is 3
 	positionOf: (note) => @noteNames().indexOf note
 
 	#frequency of a *note*.

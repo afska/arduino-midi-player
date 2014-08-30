@@ -8,9 +8,7 @@ class BeatConverter
 
 	#to milliseconds.
 	toMs: (beats) =>
-		Math.round(
-			(beats / BeatConverter.Beat) * @_beatDuration()
-		)
+		(beats / BeatConverter.Beat) * @_beatDuration()
 
 	#to beats.
 	toBeats: (ms) =>
