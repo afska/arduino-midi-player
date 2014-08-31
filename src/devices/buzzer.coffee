@@ -1,5 +1,6 @@
 VirtualDevice = include "devices/core/virtualDevice"
 noteDictionary = include "music/converters/noteDictionary"
+NanoTimer = require "nanotimer"
 q = require "q"
 board = include "board"
 module.exports =
@@ -28,6 +29,7 @@ class Buzzer extends VirtualDevice
 			@send [@pin, 0]
 			deferred.resolve()
 
-		setTimeout stop, duration
+		new NanoTimer()
+			.setTimeout stop, "", "#{duration}m"
 		deferred.promise
 #------------------------------------------------------------------------------------------

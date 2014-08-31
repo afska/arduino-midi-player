@@ -17,6 +17,7 @@
 		"q": "*",
 		"extend": "*",
 		"lodash": "*",
+		"nanotimer": "*",
 		"midifile": "*"
 	}
 }
