@@ -52,10 +52,12 @@ void outputPort(byte portNumber, byte portValue, byte forceSend) {
 }
 
 void setPinModeCallback(byte pin, int mode) {
-  pinState[pin] = 0;
-  digitalWrite(PIN_TO_DIGITAL(pin), LOW);
-  pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
-  pinConfig[pin] = OUTPUT;
+  if (pin < TOTAL_PINS) {
+    pinState[pin] = 0;
+    digitalWrite(PIN_TO_DIGITAL(pin), LOW);
+    pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
+    pinConfig[pin] = OUTPUT;
+  }
 }
 
 void analogWriteCallback(byte pin, int value) {
