@@ -236,7 +236,6 @@ void analogWriteCallback(byte pin, int value) {
         noTone(BUZZER_TONE_PORT);
     } else {
       //(De)activate the normal buzzer:
-      pinMode(next_buzzer, OUTPUT);
       buzzers[next_buzzer].activated = value != 0;
       buzzers[next_buzzer].on = false;
       buzzers[next_buzzer].highTime = value;
@@ -550,7 +549,7 @@ void loop()
 
   //--------------------------------------------------
   //Toggle activated pins (if it's time to do it):
-  for(int i = PIN_FROM; i <= PIN_TO; i++) {
+  for (int i = PIN_FROM; i <= PIN_TO; i++) {
     if (buzzers[i].activated) {
       unsigned long newTime = micros();
       if (newTime - buzzers[i].lastTime >= buzzers[i].highTime) {

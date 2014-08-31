@@ -1,5 +1,6 @@
 #include <Wire.h>
 #include <Firmata.h>
+#include "digitalWriteFast.h"
 
 //This sketch has the only things that are necessary
 //to run the MIDI player, so probably is faster.
@@ -54,8 +55,8 @@ void outputPort(byte portNumber, byte portValue, byte forceSend) {
 void setPinModeCallback(byte pin, int mode) {
   if (pin < TOTAL_PINS) {
     pinState[pin] = 0;
-    digitalWrite(PIN_TO_DIGITAL(pin), LOW);
-    pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
+    digitalWriteFast(PIN_TO_DIGITAL(pin), LOW);
+    pinModeFast(PIN_TO_DIGITAL(pin), OUTPUT);
     pinConfig[pin] = OUTPUT;
   }
 }
@@ -76,14 +77,13 @@ void analogWriteCallback(byte pin, int value) {
         noTone(BUZZER_TONE_PORT);
     } else {
       //(De)activate the normal buzzer:
-      pinMode(next_buzzer, OUTPUT);
       buzzers[next_buzzer].activated = value != 0;
       buzzers[next_buzzer].on = false;
       buzzers[next_buzzer].highTime = value;
       buzzers[next_buzzer].lastTime = micros();
 
       if (value == 0) {
-        digitalWrite(next_buzzer, LOW);
+        digitalWriteFast(next_buzzer, LOW);
       }
     }
   }
@@ -197,12 +197,12 @@ void loop()
 
   //--------------------------------------------------
   //Toggle activated pins (if it's time to do it):
-  for(int i = PIN_FROM; i <= PIN_TO; i++) {
+  for (int i = PIN_FROM; i <= PIN_TO; i++) {
     if (buzzers[i].activated) {
       unsigned long newTime = micros();
       if (newTime - buzzers[i].lastTime >= buzzers[i].highTime) {
         buzzers[i].on = !buzzers[i].on;
-        digitalWrite(i, buzzers[i].on ? HIGH : LOW);
+        digitalWriteFast(i, buzzers[i].on ? HIGH : LOW);
         buzzers[i].lastTime = newTime;
       }
     }
