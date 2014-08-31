@@ -3,7 +3,7 @@ module.exports =
 #------------------------------------------------------------------------------------------
 #A converter between beats and milliseconds.
 class BeatConverter
-	@Beat: 1/4
+	@Beat: 1/4 #length of a beat.
 	constructor: (@tempo) ->
 
 	#to milliseconds.

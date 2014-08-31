@@ -6,6 +6,8 @@ module.exports =
 #------------------------------------------------------------------------------------------
 #A builder for quickly making *songs*.
 class SongWithBuilder extends Song
+	@Tolerance: 10 #tolerance for floating point errors.
+
 	constructor: -> super []
 	
 	#add a empty melody.
@@ -17,8 +19,9 @@ class SongWithBuilder extends Song
 	#get the first *melody* that its ending time is older than the current *time*.
 	#if it doesn't exist, it will be created.
 	getIddleMelody: (time) =>
+		tolerance = SongWithBuilder.Tolerance
 		melody = @melodies.find((melody) =>
-			melody.trimmedDuration() <= time
+			melody.trimmedDuration() - tolerance <= time
 		) || @add time
 
 		melody.enlargeTo time
