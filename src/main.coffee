@@ -15,7 +15,7 @@ class Example
 
 		@blinkTheLed()
 		#@playHappyBirthday()
-		@playMidi()
+		@playMidi process.argv[2]
 
 	blinkTheLed: => new Led(13).blink 200
 
@@ -38,9 +38,9 @@ class Example
 			{ note: "f4", length: 1/4 }
 		], 120), 3
 
-	playMidi: =>
+	playMidi: (filePath) =>
 		pin = 3
-		new MidiReader("/home/rodri/Desktop/asa.mid") #todo: deshardcodear
+		new MidiReader(filePath)
 			.toSong()
 			.forEachMelody (melody) =>
 				@_playInBuzzer melody, pin++

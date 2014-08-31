@@ -6,7 +6,10 @@ module.exports = (grunt) ->
 
 	grunt.registerTask "compile", ["clean", "coffee"]
 	grunt.registerTask "default", ["watch"]
+
 	grunt.initConfig
+		midiFile: grunt.option "midi"
+
 		clean: [".js"]
 
 		coffee:
@@ -20,6 +23,7 @@ module.exports = (grunt) ->
 		execute:
 			run:
 				src: [".js/main.js"]
+				options: args: ["<%= midiFile %>"]
 
 		watch:
 			coffee:
