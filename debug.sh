@@ -10,4 +10,4 @@ killall node
 node-inspector > /dev/null 2>&1 &
 google-chrome http://127.0.0.1:8080/debug?port=5858
 
-node --debug-brk .js/main.js
+node --debug-brk .js/main.js $1
