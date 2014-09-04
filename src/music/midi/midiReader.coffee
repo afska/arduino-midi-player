@@ -16,9 +16,8 @@ class MidiReader
 			melody = song.getIddleMelody Math.round(event.playTime)
 
 			melody.add
-				note: event.note()
-				duration: event.duration
-		song.clean()
+				note: event.note(), duration: event.duration
+
 		song
 
 	#all events of all tracks processed.

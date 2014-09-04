@@ -22,7 +22,7 @@ class SongWithBuilder extends Song
 		tolerance = SongWithBuilder.Tolerance
 		melody = @melodies.find((melody) =>
 			melody.trimmedDuration() - tolerance <= time
-		) || @add time
+		) || @add()
 
 		melody.enlargeTo time
 		melody
