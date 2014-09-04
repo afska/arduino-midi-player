@@ -1,5 +1,6 @@
 MidiFile = include "music/midi/midiFile"
 SongWithBuilder = include "music/builders/songWithBuilder"
+FirstIddle = include "music/builders/allocators/firstIddle"
 include "utils/arrayUtils"
 module.exports =
 
@@ -10,13 +11,16 @@ class MidiReader
 		@file = new MidiFile filePath
 		
 	#convert the file to a *song*.
-	toSong: =>
+	toSong: (melodyAllocator = new FirstIddle()) =>
 		song = new SongWithBuilder()
 		@allEvents().forEach (event) =>
-			melody = song.getIddleMelody Math.round(event.playTime)
+			request =
+				time: Math.round event.playTime
+				note: event.note()
 
+			melody = song.getMelodyFor melodyAllocator, request
 			melody.add
-				note: event.note(), duration: event.duration
+				note: request.note, duration: event.duration
 
 		song
 
