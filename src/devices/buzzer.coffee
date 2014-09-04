@@ -14,9 +14,9 @@ class Buzzer extends VirtualDevice
 		super Buzzer.LogicPort
 
 	#play a *note* (e.g. "a#4") for *duration* ms.
-	playNote: (note, duration) =>
-		high = noteDictionary.get(note).highTime
-		@_playTone high, duration
+	playNote: (noteInfo) =>
+		high = noteDictionary.get(noteInfo.note).highTime
+		@_playTone high, noteInfo.duration
 
 	#play a tone creating a wave with *high* ns
 	#of high time, with *duration* ms long.

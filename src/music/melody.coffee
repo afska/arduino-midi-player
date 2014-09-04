@@ -19,14 +19,14 @@ class Melody
 
 	#play the melody with a *player*.
 	#a player is an object that understands:
-	# playNote(note, duration)
+	# playNote(noteInfo)
 	playWith: (player) =>
 		@_start()
 
 		playAllNotes = (previousPromise, noteInfo) =>
 			previousPromise.then =>
 				@events.emit "note", noteInfo
-				player.playNote noteInfo.note, noteInfo.duration
+				player.playNote noteInfo
 
 		seed = q.defer() ; seed.resolve()
 		@notes
