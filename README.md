@@ -2,6 +2,8 @@
 ---------------------
 A MIDI File player for [Arduino](http://arduino.cc/), made in [CoffeeScript](https://github.com/jashkenas/coffeescript) (with [node](https://github.com/joyent/node)).
 
+[!] Warning: This is under construction.
+
 ## introduction
 
 ### demo
@@ -74,7 +76,7 @@ The js scripts tells to the sketch what note it has to play and in which speaker
 
 => I used the `analogWrite` message on a specific port (*3*) for sending notes.
 
-For example, to make the buzzer 6 to play an A4, the messages are:
+For example, to make the *buzzer 6* to play an *A4*, the messages are:
 ```c
 analogWrite(3, 6); //selected buzzer
 analogWrite(3, 1136); //timeHigh of the A4
