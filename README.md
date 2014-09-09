@@ -49,6 +49,7 @@ The player is made with buzzers. A buzzer makes a clicking sound each time it is
 To produce a square wave with *440hz* of frequency, the time that the pin has to be *HIGH* is *1136us*. How do I know that?
 
 The period is the amount of time it takes for the wave to repeat itself:
+
 ![owbvrjqo3925446228614708412](https://cloud.githubusercontent.com/assets/1631752/4197568/f0fd4676-37eb-11e4-9c61-8c550085414e.jpg)
 
 => we need the buzzer pin to be *HIGH* in the first half of the period, and *LOW* in the other half =>
