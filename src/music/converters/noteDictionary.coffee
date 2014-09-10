@@ -12,7 +12,6 @@ class NoteDictionary
 				frequency: @_frequencyOf note
 				highTime: @_highTimeOf note
 
-
 	#all available note names.
 	noteNames: =>
 		names = [0 .. 10]

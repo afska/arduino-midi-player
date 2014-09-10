@@ -4,6 +4,7 @@ Led = include "devices/led"
 Buzzer = include "devices/buzzer"
 Melody = include "music/melody"
 MidiReader = include "music/midi/midiReader"
+HighChannel = include "music/builders/allocators/highChannel"
 
 board = include "board"
 module.exports =
@@ -41,7 +42,7 @@ class Example
 	playMidi: (filePath) =>
 		pin = 3
 		new MidiReader(filePath)
-			.toSong()
+			.toSong(new HighChannel("b4"))
 			.forEachMelody (melody) =>
 				@_playInBuzzer melody, pin++
 
