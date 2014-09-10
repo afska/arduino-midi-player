@@ -9,6 +9,7 @@ module.exports =
 #A piezo that can play sounds by clicking at the right frequency.
 class Buzzer extends VirtualDevice
 	@LogicPort: 3 #pin for sending notes.
+	@MaxNote: "b4" #max note of the normal speakers.
 
 	constructor: (@pin) ->
 		super Buzzer.LogicPort

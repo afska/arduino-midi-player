@@ -40,7 +40,7 @@ class Example
 		], 120), 3
 
 	playMidi: (filePath, firstIddle) =>
-		allocator = new HighChannel("b4") if not firstIddle
+		allocator = new HighChannel(Buzzer.MaxNote) if not firstIddle
 
 		pin = 3
 		new MidiReader(filePath)
