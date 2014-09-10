@@ -21,6 +21,7 @@ It does ignore:
 - effects: bend, vibrato, etc
 - tracks info: instrument\*, volume
 - any other not-note events
+
 \* *be careful with percussion tracks*
 
 ### limitations

@@ -22,15 +22,14 @@ class Buzzer extends VirtualDevice
 	#play a tone creating a wave with *high* ns
 	#of high time, with *duration* ms long.
 	_playTone: (high, duration) =>
+		if @timer then @timer.clearInterval()
+
 		high = Math.round high
 		@send [@pin, high]
 
 		deferred = q.defer()
-		stop = =>
-			@send [@pin, 0]
-			deferred.resolve()
-
-		new NanoTimer()
+		stop = => @send [@pin, 0] ; deferred.resolve()
+		@timer = new NanoTimer()
 			.setTimeout stop, "", "#{duration}m"
 		deferred.promise
 #------------------------------------------------------------------------------------------

@@ -8,11 +8,11 @@ class FirstIddle
 
 	#allocate a melody for this note request.
 	alloc: (song, request) =>
-		@findIddle song.melodies, request
+		@_findIddle song.melodies, request
 
 	#find the first iddle melody.
 	#a melody is iddle when it ends before the request time.
-	findIddle: (melodies, request) =>
+	_findIddle: (melodies, request) =>
 		melodies.find((melody) =>
 			melody.trimmedDuration() - FirstIddle.Tolerance <= request.time
 		)

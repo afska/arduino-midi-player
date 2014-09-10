@@ -13,5 +13,5 @@ class HighChannel extends FirstIddle
 	alloc: (song, request) =>
 		if noteDictionary.positionOf(request.note) > noteDictionary.positionOf(@max)
 			song.melodies.first()
-		else @findIddle song.melodies.slice(1), request
+		else @_findIddle song.melodies.slice(1), request
 #------------------------------------------------------------------------------------------

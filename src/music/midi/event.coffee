@@ -12,6 +12,7 @@ class Event
 
 	constructor: (json) ->
 		extend true, @, json
+		@playTime = Math.round @playTime
 
 	#if it's a note event.
 	isNote: =>
@@ -32,7 +33,7 @@ class Event
 	#delta time (in ms) with another *next* event.
 	deltaWith: (next) =>
 		if !next? then return 0
-		next.playTime - @playTime
+		Math.round next.playTime - @playTime
 
 	#duration of the note based on the *nextEvents*.
 	durationIn: (nextEvents) =>

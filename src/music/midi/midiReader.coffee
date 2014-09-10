@@ -15,7 +15,7 @@ class MidiReader
 		song = new SongWithBuilder()
 		@allEvents().forEach (event) =>
 			request =
-				time: Math.round event.playTime
+				time: event.playTime
 				note: event.note()
 
 			melody = song.getMelodyFor melodyAllocator, request

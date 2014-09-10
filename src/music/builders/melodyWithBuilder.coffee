@@ -18,17 +18,6 @@ class MelodyWithBuilder extends Melody
 		if getDelta() > 0 then @_enlargeTo getDelta
 		else @_cutTo getDelta
 
-	#add silences until the melody is *duration* ms long.
-	_enlargeTo: (getDelta) =>
-		@add note: "r", duration: getDelta()
-
-	#cut notes until the melody is *duration* ms long.
-	_cutTo: (getDelta) =>
-		while (delta = getDelta()) < 0
-			last = @notes.last()
-			last.duration += delta
-			if last.duration <= 0 then @notes.pop()
-
 	#the last note.
 	_lastNote: => @notes.last()
 
@@ -40,4 +29,15 @@ class MelodyWithBuilder extends Melody
 	_excess: =>
 		last = @_lastNote()
 		if last?.isRest() then last.duration else 0
+
+	#add silences until the melody is *duration* ms long.
+	_enlargeTo: (getDelta) =>
+		@add note: "r", duration: getDelta()
+
+	#cut notes until the melody is *duration* ms long.
+	_cutTo: (getDelta) =>
+		while (delta = getDelta()) < 0
+			last = @notes.last()
+			last.duration += delta
+			if last.duration <= 0 then @notes.pop()
 #------------------------------------------------------------------------------------------
