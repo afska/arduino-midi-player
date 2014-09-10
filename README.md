@@ -10,11 +10,17 @@ A MIDI File player for [Arduino](http://arduino.cc/), made in [CoffeeScript](htt
 Link to video
 
 ### features
-A subset of the MIDI File specification is implemented. Actually it supports:
+A subset of the MIDI File specification is implemented.
+
+It supports:
 - various tracks
 - simultaneous notes in one track
 - bpm changes
-- *((to-do)) bends*
+
+It does ignore:
+- effects: bend, vibrato, etc
+- track volumes
+- any other not-note events
 
 ### limitations
 - the higher note that the buzzers can play is a *B4*: the exception is the first buzzer, which takes advantage of the Arduino's internal timer
