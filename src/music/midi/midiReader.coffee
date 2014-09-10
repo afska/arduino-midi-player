@@ -29,9 +29,7 @@ class MidiReader
 		[0 ... @file.totalTracks()]
 			.map(@processTrack)
 			.flatten()
-			.sort((one, another) =>
-				if one.playTime <= another.playTime then -1 else 1
-			)
+			.sortBy "playTime"
 
 	#apply some transformations to the track events.
 	processTrack: (track) =>

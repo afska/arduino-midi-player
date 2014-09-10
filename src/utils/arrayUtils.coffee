@@ -15,10 +15,10 @@ _ = require "lodash"
 		args = Array::slice.call arguments
 		_[functionName].apply @, [@].concat args
 
-Array::isEmpty = -> @length is 0
-
 Array::findProperty = (property) ->
 	@find((it) -> it[property]?)?[property]
+
+Array::isEmpty = -> @length is 0
 
 Array::sum = (mapper) ->
 	@
