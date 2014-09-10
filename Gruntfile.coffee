@@ -29,7 +29,7 @@ module.exports = (grunt) ->
 		watch:
 			coffee:
 				files: "src/**/*.coffee"
-				tasks: ["compile", "execute:run"]
+				tasks: ["compile", "execute"]
 				options:
 					atBegin: true
 					interrupt: true
