@@ -20,7 +20,7 @@ class SongWithBuilder extends Song
 	getMelodyFor: (allocator, request) =>
 		melody = allocator.alloc(@, request) || @add()
 
-		melody.enlargeTo request.time
+		melody.fixTo request.time
 		melody
 
 	#remove the melodies that are composed only by silences.

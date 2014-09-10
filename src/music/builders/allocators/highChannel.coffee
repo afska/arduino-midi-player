@@ -8,9 +8,10 @@ module.exports =
 #For the other notes is the FirstIddle algorithm.
 class HighChannel extends FirstIddle
 	constructor: (@max) ->
-		
+
+	#allocate a melody for this note request.
 	alloc: (song, request) =>
 		if noteDictionary.positionOf(request.note) > noteDictionary.positionOf(@max)
 			song.melodies.first()
-		else super song, request
+		else @findIddle song.melodies.slice(1), request
 #------------------------------------------------------------------------------------------

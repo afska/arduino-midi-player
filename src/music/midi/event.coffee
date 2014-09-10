@@ -29,11 +29,6 @@ class Event
 	#name of the note.
 	note: => noteDictionary.noteNames()[@param1]
 
-	#convert the event to a "note on" event with a rest.
-	convertToRest: =>
-		@subtype = Event.Types.subTypes.on
-		@param1 = noteDictionary.positionOf "r"
-
 	#delta time (in ms) with another *next* event.
 	deltaWith: (next) =>
 		if !next? then return 0

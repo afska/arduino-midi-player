@@ -6,8 +6,14 @@ module.exports =
 class FirstIddle
 	@Tolerance: 10 #tolerance for floating point errors.
 
+	#allocate a melody for this note request.
 	alloc: (song, request) =>
-		song.melodies.find((melody) =>
+		@findIddle song.melodies, request
+
+	#find the first iddle melody.
+	#a melody is iddle when it ends before the request time.
+	findIddle: (melodies, request) =>
+		melodies.find((melody) =>
 			melody.trimmedDuration() - FirstIddle.Tolerance <= request.time
 		)
 #------------------------------------------------------------------------------------------

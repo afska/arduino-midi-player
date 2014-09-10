@@ -10,13 +10,24 @@ class MelodyWithBuilder extends Melody
 	#duration of the melody in ms, without a final rest.
 	trimmedDuration: => @_duration() - @_excess()
 
-	#fill the melody with rests until it's *duration* ms long.
-	enlargeTo: (duration) =>
-		delta = duration - @trimmedDuration()
-
+	#fix the time of the melody to *duration* ms.
+	fixTo: (duration) =>
 		if @_excess() > 0 then @notes.pop()
-		if delta > 0
-			@add note: "r", duration: delta
+
+		getDelta = => duration - @trimmedDuration()
+		if getDelta() > 0 then @_enlargeTo getDelta
+		else @_cutTo getDelta
+
+	#add silences until the melody is *duration* ms long.
+	_enlargeTo: (getDelta) =>
+		@add note: "r", duration: getDelta()
+
+	#cut notes until the melody is *duration* ms long.
+	_cutTo: (getDelta) =>
+		while (delta = getDelta()) < 0
+			last = @notes.last()
+			last.duration += delta
+			if last.duration <= 0 then @notes.pop()
 
 	#the last note.
 	_lastNote: => @notes.last()
