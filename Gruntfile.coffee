@@ -9,6 +9,7 @@ module.exports = (grunt) ->
 
 	grunt.initConfig
 		midiFile: grunt.option "midi"
+		firstIddle: grunt.option "firstIddle"
 
 		clean: [".js"]
 
@@ -23,7 +24,7 @@ module.exports = (grunt) ->
 		execute:
 			run:
 				src: [".js/main.js"]
-				options: args: ["<%= midiFile %>"]
+				options: args: ["<%= midiFile %>", "<%= firstIddle %>"]
 
 		watch:
 			coffee:

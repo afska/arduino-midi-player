@@ -16,7 +16,7 @@ class Example
 
 		@blinkTheLed()
 		#@playHappyBirthday()
-		@playMidi process.argv[2]
+		@playMidi process.argv[2], process.argv[3]
 
 	blinkTheLed: => new Led(13).blink 200
 
@@ -39,10 +39,12 @@ class Example
 			{ note: "f4", length: 1/4 }
 		], 120), 3
 
-	playMidi: (filePath) =>
+	playMidi: (filePath, firstIddle) =>
+		allocator = new HighChannel("b4") if not firstIddle
+
 		pin = 3
 		new MidiReader(filePath)
-			.toSong(new HighChannel("b4"))
+			.toSong(allocator)
 			.forEachMelody (melody) =>
 				@_playInBuzzer melody, pin++
 
