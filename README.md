@@ -19,8 +19,9 @@ It supports:
 
 It does ignore:
 - effects: bend, vibrato, etc
-- track volumes
+- tracks info: instrument\*, volume
 - any other not-note events
+\* *be careful with percussion tracks*
 
 ### limitations
 - the higher note that the buzzers can play is a *B4*: the exception is the first buzzer, which takes advantage of the Arduino's internal timer
