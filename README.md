@@ -7,7 +7,7 @@ A MIDI File player for [Arduino](http://arduino.cc/), made in [CoffeeScript](htt
 ## introduction
 
 ### demo
-Link to video
+[![screenshot2](https://cloud.githubusercontent.com/assets/1631752/4229016/bafcd452-3966-11e4-9e99-d57b5b198311.png)](https://www.youtube.com/watch?v=hKU2V201VXA)
 
 ### features
 A subset of the MIDI File specification is implemented.
