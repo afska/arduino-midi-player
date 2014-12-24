@@ -10,8 +10,8 @@ class HighChannel extends FirstIddle
 	constructor: (@max) ->
 
 	#allocate a melody for this note request.
-	alloc: (song, request) =>
+	alloc: (melodies, request) =>
 		if noteDictionary.positionOf(request.note) > noteDictionary.positionOf(@max)
-			song.melodies.first()
-		else @_findIddle song.melodies.slice(1), request
+			melodies.first()
+		else super melodies.slice(1), request
 #------------------------------------------------------------------------------------------

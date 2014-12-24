@@ -18,7 +18,7 @@ class SongWithBuilder extends Song
 	#the *allocator* is the algorithm for selecting melodies.
 	#the *request* is composed by a time and a note.
 	getMelodyFor: (allocator, request) =>
-		melody = allocator.alloc(@, request) || @add()
+		melody = allocator.alloc(@melodies, request) || @add()
 
 		melody.fixTo request.time
 		melody
