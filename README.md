@@ -41,8 +41,11 @@ npm install
 ### usage
 ```bash
 #upload sketch/fast/fast.ino to your Arduino board
+grunt --midi=examples/beethoven-virus.mid
+grunt --midi=examples/mentirosa.mid
+grunt --midi=examples/pokemon-intro.mid --firstIddle
 grunt --midi=examples/pokemon-battle.mid
-grunt --midi=examples/mentirosa.mid --firstIddle
+grunt --midi=examples/technical-difficulties.mid
 ```
 
 ## theory
