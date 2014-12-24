@@ -5,7 +5,7 @@ A MIDI File player for [Arduino](http://arduino.cc/), made in [CoffeeScript](htt
 ## introduction
 
 ### demo
-[![screenshot2](https://cloud.githubusercontent.com/assets/1631752/4229016/bafcd452-3966-11e4-9e99-d57b5b198311.png)](https://www.youtube.com/watch?v=hKU2V201VXA)
+[![video_play](https://cloud.githubusercontent.com/assets/1631752/5550147/92ed89cc-8b7b-11e4-9667-05e1dce784bc.png)](https://www.youtube.com/watch?v=w6dZp74TueM)
 
 ### features
 A subset of the MIDI File specification is implemented.
@@ -100,7 +100,7 @@ analogWrite(3, 0);
 The sketch code (while is optimized to write ports with [direct-io](https://code.google.com/p/digitalwritefast/)), can't handle high frequencies. That limitation impedes the buzzers [4..7] to play high notes. The only one that can play any notes is the *buzzer 3*: it uses the internal timer and the *tone()* function.
 
 ### merging tracks
-Many times, some MIDI Tracks can be unified: while one is playing notes, another is playing silences. The player makes a mix only with the notes that will be actually played. This depends on the *play modes*.
+Many times, some MIDI Tracks can be unified: while one is playing notes, another is playing silences. The player makes a mix only with the notes that will be actually played. This depends on the *playing modes*.
 
 #### the playing modes
 Because the max-note-limitation, there're two modes of playing files:
