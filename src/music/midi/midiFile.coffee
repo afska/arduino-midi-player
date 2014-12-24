@@ -10,7 +10,7 @@ module.exports =
 class MidiFile extends MIDIFile
 	constructor: (filePath) ->
 		buffer = fs
-			.readFileSync(filePath)
+			.readFileSync filePath
 			.toArrayBuffer()
 
 		super buffer #supeeeeeeeeeer buffer!!!
@@ -23,10 +23,9 @@ class MidiFile extends MIDIFile
 
 	#note events in one *track*.
 	noteEventsIn: (track) =>
-		events = @noteEvents()
 		if @totalTracks() > 1
-			events = events.filter (event) => event.track is track
-		events
+			@noteEvents().filter (event) => event.track is track
+		else @noteEvents()
 
 	#number of tracks.
 	totalTracks: =>

@@ -30,15 +30,15 @@ class Event
 	#name of the note.
 	note: => noteDictionary.noteNames()[@param1]
 
-	#delta time (in ms) with another *next* event.
-	deltaWith: (next) =>
-		if !next? then return 0
-		Math.round next.playTime - @playTime
-
 	#duration of the note based on the *nextEvents*.
 	durationIn: (nextEvents) =>
 		next = nextEvents
-			.find (it) => @deltaWith(it) isnt 0
+			.find (it) => @_deltaWith(it) isnt 0
 
-		@deltaWith next
+		@_deltaWith next
+
+	#delta time (in ms) with another *next* event.
+	_deltaWith: (next) =>
+		if not next? then return 0
+		Math.round next.playTime - @playTime
 #------------------------------------------------------------------------------------------

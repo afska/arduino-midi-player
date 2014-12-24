@@ -15,9 +15,6 @@ _ = require "lodash"
 		args = Array::slice.call arguments
 		_[functionName].apply @, [@].concat args
 
-Array::findProperty = (property) ->
-	@find((it) -> it[property]?)?[property]
-
 Array::isEmpty = -> @length is 0
 
 Array::sum = (mapper) ->
@@ -27,5 +24,3 @@ Array::sum = (mapper) ->
 			(sum, num) -> sum + num,
 			0
 		)
-
-Array::withoutLast = -> @slice 0, -1

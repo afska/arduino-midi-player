@@ -9,6 +9,4 @@ board.setPinAsInput = (pin) ->
 
 board.setPinAsOutput = (pin) ->
 	board.pinMode pin, true
-
-board
 #------------------------------------------------------------------------------------------

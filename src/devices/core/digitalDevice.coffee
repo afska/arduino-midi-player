@@ -15,7 +15,7 @@ class DigitalDevice
 	off: => @_update false
 
 	#turn on/off the device.
-	toggle: => @_update !@isOn
+	toggle: => @_update not @isOn
 
 	#turn the device to *isOn*.
 	_update: (isOn) =>

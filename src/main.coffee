@@ -12,39 +12,18 @@ module.exports =
 #------------------------------------------------------------------------------------------
 class Example
 	constructor: ->
-		console.log "Hello f*ckin' world :D"; debugger
+		console.log "Hello f*ckin' world :D" ; debugger
 
-		@blinkTheLed()
-		#@playHappyBirthday()
-		@playMidi process.argv[2], process.argv[3]
+		@playMidi
+			filePath: process.argv[2]
+			useFirstIddle: process.argv[3]
 
-	blinkTheLed: => new Led(13).blink 200
-
-	playHappyBirthday: =>
-		@_playInBuzzer new Melody([
-			{ note: "c4", length: 1/8 }
-			{ note: "r", length: 1/16 }
-			{ note: "c4", length: 1/16 }
-			{ note: "d4", length: 1/4 }
-			{ note: "c4", length: 1/4 }
-			{ note: "f4", length: 1/4 }
-			{ note: "e4", length: 1/4 }
-			{ note: "r", length: 1/4 }
-			{ note: "c4", length: 1/8 }
-			{ note: "r", length: 1/16 }
-			{ note: "c4", length: 1/16 }
-			{ note: "d4", length: 1/4 }
-			{ note: "c4", length: 1/4 }
-			{ note: "g4", length: 1/4 }
-			{ note: "f4", length: 1/4 }
-		], 120), 3
-
-	playMidi: (filePath, firstIddle) =>
-		allocator = new HighChannel(Buzzer.MaxNote) if not firstIddle
+	playMidi: (opt) =>
+		allocator = new HighChannel(Buzzer.MaxNote) if not opt.useFirstIddle
 
 		pin = 3
-		new MidiReader(filePath)
-			.toSong(allocator)
+		new MidiReader(opt.filePath)
+			.toSong allocator
 			.forEachMelody (melody) =>
 				@_playInBuzzer melody, pin++
 
@@ -54,8 +33,8 @@ class Example
 		melody.events
 			.on "start", -> console.log "start!"
 
-		melody.events.on "note", (noteInfo) ->
-			console.log "[buzzer #{pin}] playing a #{noteInfo.note} for #{noteInfo.duration} ms"
+		melody.events.on "note", (info) ->
+			console.log "[buzzer #{pin}] playing a #{info.note} for #{info.duration} ms"
 
 		melody.events
 			.on "end", -> console.log "end!"

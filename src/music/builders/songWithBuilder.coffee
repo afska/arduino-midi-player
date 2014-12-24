@@ -27,6 +27,6 @@ class SongWithBuilder extends Song
 	#returns the song.
 	clean: =>
 		@melodies = @melodies.filter (melody) =>
-			melody.notes.some (noteInfo) => !noteInfo.isRest()
+			melody.notes.some (noteInfo) => not noteInfo.isRest()
 		@
 #------------------------------------------------------------------------------------------

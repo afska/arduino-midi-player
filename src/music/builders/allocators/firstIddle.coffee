@@ -13,7 +13,6 @@ class FirstIddle
 	#find the first iddle melody.
 	#a melody is iddle when it ends before the request time.
 	_findIddle: (melodies, request) =>
-		melodies.find((melody) =>
+		melodies.find (melody) =>
 			melody.trimmedDuration() - FirstIddle.Tolerance <= request.time
-		)
 #------------------------------------------------------------------------------------------
