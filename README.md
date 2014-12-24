@@ -2,8 +2,6 @@
 ---------------------
 A MIDI File player for [Arduino](http://arduino.cc/), made in [CoffeeScript](https://github.com/jashkenas/coffeescript) (with [node](https://github.com/joyent/node)).
 
-[!] Warning: This is under construction.
-
 ## introduction
 
 ### demo
@@ -17,23 +15,21 @@ It supports:
 - simultaneous notes in one track
 - bpm changes
 
-It does ignore:
-- effects: bend, vibrato, etc
-- tracks info: instrument\*, volume
-- any other not-note events
-
-\* *be careful with percussion tracks*
-
 ### limitations
-- the higher note that the buzzers can play is a *B4*: the exception is the first buzzer, which takes advantage of the Arduino's internal timer
-- *((to-fix)) there are sync problems when it's used with too many tracks*
+- It does ignore:
+	- effects (bend, vibrato...)
+	- track's information (instrument\*, volume...)
+	- any other non-note events
+
+	\* *be careful with percussion tracks*
+
+- The higher note that the buzzers can play is a *B4*: the exception is the first buzzer, which takes advantage of the Arduino's internal timer.
 
 ## usage
 ### wiring
 ![screenshot1](https://cloud.githubusercontent.com/assets/1631752/4197936/1f7d0a3a-37f2-11e4-8488-42d5e666f6a3.png)
 - up to 5 buzzers simultaneously, connected to pins [3..7]
 - a 220Ω resistor for each connected buzzer
-- [optional] a led at pin 13 :)
 
 ### install
 ```bash
@@ -51,22 +47,22 @@ grunt --midi=examples/mentirosa.mid --firstIddle
 
 ## theory
 ### producing notes
-The player is made with buzzers. A buzzer makes a clicking sound each time it is pulsed with current. A clicking sound is not funny, but what if we pulse it *440* times in a second? OMG, we got an *A* note.
+The player is made with buzzers. A buzzer makes a clicking sound each time it is pulsed with current. A clicking sound is not funny, but what if we pulse it *440* times in a second? Bingo, we got an *A* note.
 
 ### time of a pulse
-To produce a square wave with *440hz* of frequency, the time that the pin has to be *HIGH* is *1136us*. How do I know that?
+To produce a square wave with *440hz* of frequency, the time that the pin has to be *HIGH* is *1136us*. How do we know that?
 
 The period is the amount of time it takes for the wave to repeat itself:
 
 ![owbvrjqo3925446228614708412](https://cloud.githubusercontent.com/assets/1631752/4197568/f0fd4676-37eb-11e4-9c61-8c550085414e.jpg)
 
-=> we need the buzzer pin to be *HIGH* in the first half of the period, and *LOW* in the other half =>
+=> we need the buzzer's pin to be *HIGH* in the first half of the period, and *LOW* in the other half =>
 ```javascript
 timeHigh = period / 2 = (1 / frequency) / 2
 ```
 
 ### frequency of a note
-The frequency of a note can be calculated (taking by reference an `A` in the 4th octave: *A4 - 440hz*):
+The frequency of a note can be calculated (taking by reference an *A* in the 4th octave: *A4 - 440hz*):
 ```javascript
 440 * c^distance
 //c: a constant, the twelth root of 2
@@ -74,16 +70,16 @@ The frequency of a note can be calculated (taking by reference an `A` in the 4th
 ```
 
 ## details for nerds
-### nodejs? WTF
+### nodejs? how?
 Arduino boards can be controlled by any computer using the [Firmata Protocol](http://firmata.org/wiki/V2.3ProtocolDetails), particularly by nodejs thanks to the [johnny-five](https://github.com/rwaldron/johnny-five) programming framework: it sends to the board the instructions by the serial connection.
 
 ### performance issues
-Node is slow. Not really, but is slower than C. To reach high notes, pauses of very few microseconds are needed. Because of this, the wave-generating part is implemented in the sketch.
+Node is slow. Not really, but it's slower than native C code running on the board. To reach high notes, pauses of very few microseconds are needed. Because of this, the wave-generating part is implemented in the sketch.
 
 ### communication node-sketch
-The js scripts tells to the sketch what note it has to play and in which speaker: this is made by a pseudo custom protocol. Serial port is used by Firmata to control the board, so extra info can't be appended.
+The js scripts tells to the sketch what note it has to play and in which speaker: this is made by a pseudo custom protocol. The serial port is used by Firmata to control the board, so extra info can't be appended.
 
-=> I used the `analogWrite` message on a specific port (*3*) for sending notes.
+=> The `analogWrite` message was used on a specific port (*3*) for sending notes.
 
 For example, to make the *buzzer 6* to play an *A4*, the messages are:
 ```c
@@ -103,7 +99,7 @@ The sketch code (while is optimized to write ports with [direct-io](https://code
 ### merging tracks
 Many times, some MIDI Tracks can be unified: while one is playing notes, another is playing silences. The player makes a mix only with the notes that will be actually played. This depends on the *play modes*.
 
-### the play modes
+#### the playing modes
 Because the max-note-limitation, there're two modes of playing files:
-- **First Iddle**: *(--firstIddle)* Assigns the first iddle buzzer to all notes. This produces more uniform sound when the user is sure that the notes of the MIDI are lower than the max note.
+- **First Iddle**: *(--firstIddle)* It assigns the first iddle buzzer to all notes. This produces more uniform sound when the user is sure that the notes of the MIDI are lower than the max note.
 - **High Channel**: *[default]* The notes higher than the max note are assigned to the first buzzer. If two high notes have to sound together, one will be ignored.

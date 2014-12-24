@@ -1,6 +1,5 @@
 require "./utils/include"
 
-Led = include "devices/led"
 Buzzer = include "devices/buzzer"
 Melody = include "music/melody"
 MidiReader = include "music/midi/midiReader"
