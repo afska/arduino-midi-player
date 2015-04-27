@@ -14,7 +14,7 @@ class NoteDictionary
 
 	#all available note names.
 	noteNames: =>
-		names = [0 .. 10]
+		[0 .. 10]
 			.map (octave) =>
 				[
 					"c", "c#", "d"
