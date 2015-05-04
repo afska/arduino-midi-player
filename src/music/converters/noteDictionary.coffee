@@ -25,7 +25,7 @@ class NoteDictionary
 			.flatten()
 			.concat "r"
 
-	#get all the info of a note.
+	#get all the info of a *note*.
 	get: (note) =>
 		@notes.find (noteInfo) => noteInfo.note is note
 
