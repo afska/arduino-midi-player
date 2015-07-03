@@ -14,7 +14,7 @@ class NoteDictionary
 
 	#all available note names.
 	noteNames: =>
-		names = [0 .. 10]
+		[0 .. 10]
 			.map (octave) =>
 				[
 					"c", "c#", "d"
@@ -25,7 +25,7 @@ class NoteDictionary
 			.flatten()
 			.concat "r"
 
-	#get all the info of a note.
+	#get all the info of a *note*.
 	get: (note) =>
 		@notes.find (noteInfo) => noteInfo.note is note
 
