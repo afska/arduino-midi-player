@@ -79,7 +79,7 @@ Arduino boards can be controlled by any computer using the [Firmata Protocol](ht
 ### performance issues
 Node is slow. Not really, but it's slower than native C code running on the board. To reach high notes, pauses of very few microseconds are needed. Because of this, the wave-generating part is implemented in the sketch.
 
-### communication node-sketch
+### node-sketch communication
 The js scripts tells to the sketch what note it has to play and in which speaker: this is made by a pseudo custom protocol. The serial port is used by Firmata to control the board, so extra info can't be appended.
 
 => The `analogWrite` message was used on a specific port (*3*) for sending notes.
