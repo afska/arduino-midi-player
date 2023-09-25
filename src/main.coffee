@@ -15,10 +15,10 @@ class Example
 
 		@playMidi
 			filePath: process.argv[2]
-			useFirstIddle: process.argv[3]
+			useFirstIdle: process.argv[3]
 
 	playMidi: (opt) =>
-		allocator = new HighChannel(Buzzer.MaxNote) if not opt.useFirstIddle
+		allocator = new HighChannel(Buzzer.MaxNote) if not opt.useFirstIdle
 
 		pin = 3
 		new MidiReader(opt.filePath)

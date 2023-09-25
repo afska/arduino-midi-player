@@ -1,12 +1,12 @@
-FirstIddle = include "music/builders/allocators/firstIddle"
+FirstIdle = include "music/builders/allocators/firstIdle"
 noteDictionary = include "music/converters/noteDictionary"
 include "utils/arrayUtils"
 module.exports =
 
 #------------------------------------------------------------------------------------------
 #Algorithm that reserves the first channel for the notes higher than the *max* note.
-#For the other notes is the FirstIddle algorithm.
-class HighChannel extends FirstIddle
+#For the other notes is the FirstIdle algorithm.
+class HighChannel extends FirstIdle
 	constructor: (@max) ->
 
 	#allocate a melody for this note request.
